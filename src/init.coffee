@@ -1,4 +1,7 @@
 Batbelt = window.Batbelt
 
-batSidebar = new Batbelt.Sidebar()
-batSidebar.init()
+sidebar = new Batbelt.Sidebar()
+sidebar.init()
+
+pane = new Batbelt.Pane
+pane.init()

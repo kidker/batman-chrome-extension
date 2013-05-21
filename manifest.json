@@ -5,5 +5,21 @@
   "description": "Chrome developer utilities to help Batman.js development",
   "version": "1.0",
 
+  "permissions": [
+    "tabs",
+    "<all_urls>"
+  ],
+
+  "background": {
+    "scripts": ["dist/background.js"]
+  },
+
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["dist/content-script.js"]
+  }],
+
   "devtools_page": "views/devtools.html"
 }

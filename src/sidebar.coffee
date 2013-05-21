@@ -7,7 +7,6 @@ class window.Batbelt.Sidebar
 
   update: (sidebar) ->
     fnDef = @info.toString()
-    console.log fnDef
     sidebar.setExpression '(' + fnDef + ')()'
 
   info: ->

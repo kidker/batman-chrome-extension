@@ -18,7 +18,6 @@
       var fnDef;
 
       fnDef = this.info.toString();
-      console.log(fnDef);
       return sidebar.setExpression('(' + fnDef + ')()');
     };
 
