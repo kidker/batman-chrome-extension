@@ -9,7 +9,6 @@
   window.addEventListener('message', function(event) {
     var sendResponse;
 
-    console.log('content-script', event, responseFunctions);
     if (event.data.from === 'batman.debug') {
       sendResponse = responseFunctions[event.data.id];
       if (sendResponse) {

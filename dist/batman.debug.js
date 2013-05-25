@@ -26,6 +26,7 @@
     };
 
     BatmanDebug.prototype.handleMessage = function(msg, cb) {
+      console.log('message received', msg);
       switch (msg.type) {
         case 'ping':
           return cb({

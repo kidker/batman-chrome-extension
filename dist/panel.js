@@ -6,27 +6,7 @@
     Panel.prototype.init = function() {
       var _this = this;
 
-      this.injectDebugger();
-      return chrome.devtools.panels.create('Batman', 'img/logo.png', 'views/panel.html', function(panel) {
-        return window.Batbelt.App.run(panel, _this.sendMessage);
-      });
-    };
-
-    Panel.prototype.injectDebugger = function() {
-      var url, xhr;
-
-      url = chrome.extension.getURL('dist/batman.debug.js');
-      xhr = new XMLHttpRequest();
-      xhr.open('GET', url, false);
-      xhr.send();
-      return chrome.devtools.inspectedWindow["eval"](xhr.responseText);
-    };
-
-    Panel.prototype.sendMessage = function(msg, cb) {
-      return chrome.runtime.sendMessage({
-        tabId: chrome.devtools.inspectedWindow.tabId,
-        data: msg
-      }, cb);
+      return chrome.devtools.panels.create('Batman', 'img/logo.png', 'views/panel.html', function(panel) {});
     };
 
     return Panel;

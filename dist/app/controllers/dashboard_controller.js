@@ -12,7 +12,13 @@
       return _ref;
     }
 
-    DashboardController.prototype.index = function(params) {};
+    DashboardController.prototype.routingKey = 'dashboard';
+
+    DashboardController.prototype.index = function(params) {
+      console.log('dashboard index');
+      this.showBlock = true;
+      return this.hideBlock = false;
+    };
 
     return DashboardController;
 

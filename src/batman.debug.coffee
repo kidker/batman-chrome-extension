@@ -9,6 +9,7 @@ class BatmanDebug
           window.postMessage {id: event.data.id, from: 'batman.debug', data: res}, '*'
 
   handleMessage: (msg, cb) ->
+    console.log 'message received', msg
     switch msg.type
       when 'ping'
         cb type: 'pong'
