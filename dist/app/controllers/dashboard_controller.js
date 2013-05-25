@@ -14,10 +14,19 @@
 
     DashboardController.prototype.routingKey = 'dashboard';
 
-    DashboardController.prototype.index = function(params) {
-      console.log('dashboard index');
-      this.showBlock = true;
-      return this.hideBlock = false;
+    DashboardController.prototype.show = function(params) {
+      var dash;
+
+      this.set('dashboard', dash = new Batbelt.Dashboard);
+      Batbelt.DebugController.load(this.errorHandler(function(controllers) {
+        return dash.set('controllers', controllers);
+      }));
+      Batbelt.DebugModel.load(this.errorHandler(function(models) {
+        return dash.set('models', models);
+      }));
+      return Batbelt.DebugView.load(this.errorHandler(function(views) {
+        return dash.set('views', views);
+      }));
     };
 
     return DashboardController;

@@ -4,19 +4,21 @@
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  Batbelt.Dashboard = (function(_super) {
-    __extends(Dashboard, _super);
+  Batbelt.DebugModel = (function(_super) {
+    __extends(DebugModel, _super);
 
-    function Dashboard() {
-      _ref = Dashboard.__super__.constructor.apply(this, arguments);
+    function DebugModel() {
+      _ref = DebugModel.__super__.constructor.apply(this, arguments);
       return _ref;
     }
 
-    Dashboard.resourceName = 'dashboard';
+    DebugModel.resourceName = 'debug_model';
 
-    Dashboard.persist(Batbelt.Storage);
+    DebugModel.persist(Batbelt.Storage);
 
-    return Dashboard;
+    DebugModel.encode('name');
+
+    return DebugModel;
 
   })(Batman.Model);
 

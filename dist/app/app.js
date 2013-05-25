@@ -18,7 +18,7 @@
       return _ref;
     }
 
-    Batbelt.root('dashboard#index');
+    Batbelt.root('dashboard#show');
 
     Batbelt.sendMessage = function(msg, cb) {
       var data;

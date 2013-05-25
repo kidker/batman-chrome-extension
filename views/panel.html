@@ -6,17 +6,25 @@
     <script src="../vendor/batman.jquery.js"></script>
 
     <script src="../dist/app/app.js"></script>
+
+    <script src="../dist/app/lib/storage_adapter.js"></script>
     <script src="../dist/app/controllers/dashboard_controller.js"></script>
     <script src="../dist/app/models/dashboard.js"></script>
+    <script src="../dist/app/models/debug_controller.js"></script>
+    <script src="../dist/app/models/debug_model.js"></script>
+    <script src="../dist/app/models/debug_view.js"></script>
     <script src="../dist/app/init.js"></script>
   </head>
   <body>
     <h1>Batman Panel</h1>
     <div data-yield="main"></div>
     
-    <div data-defineview="dashboard/index">
-      <div data-showif="showBlock">Show Me</div>
-      <div data-showif="hideBlock">Don't Show Me</div>
+    <div data-defineview="dashboard/show">
+      <ul>
+        <li data-foreach-controller="dashboard.controllers">
+          <span data-bind="controller.name"></span>
+        </li>
+      </ul>
     </div>
   </body>
 </html>
