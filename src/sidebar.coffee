@@ -1,4 +1,4 @@
-class window.Batbelt.Sidebar
+class Batbelt.Sidebar
   init: ->
     chrome.devtools.panels.elements.createSidebarPane 'Batman', (sidebar) =>
       @update(sidebar)

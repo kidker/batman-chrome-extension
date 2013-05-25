@@ -1,8 +1,8 @@
-class window.Batbelt.Pane
+class Batbelt.Panel
   init: ->
     @injectDebugger()
     chrome.devtools.panels.create 'Batman', 'img/logo.png', 'views/panel.html', (panel) =>
-      panel.onShown.addListener @onShownHandler
+      window.Batbelt.App.run(panel, @sendMessage)
 
   injectDebugger: ->
     url = chrome.extension.getURL 'dist/batman.debug.js'
@@ -15,7 +15,3 @@ class window.Batbelt.Pane
 
   sendMessage: (msg, cb) ->
     chrome.runtime.sendMessage {tabId: chrome.devtools.inspectedWindow.tabId, data: msg}, cb
-
-  onShownHandler: =>
-    @sendMessage {type: 'ping'}, (res) ->
-      console.log 'response', res
