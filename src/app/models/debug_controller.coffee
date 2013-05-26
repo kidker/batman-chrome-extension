@@ -3,4 +3,4 @@ class Batbelt.DebugController extends Batman.Model
 
   @persist Batbelt.Storage
 
-  @encode 'name'
+  @encode 'name', 'action', 'path', 'current', 'properties'

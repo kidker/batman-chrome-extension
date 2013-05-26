@@ -20,9 +20,26 @@
     <div data-yield="main"></div>
     
     <div data-defineview="dashboard/show">
+      <h3>Controllers</h3>
       <ul>
         <li data-foreach-controller="dashboard.controllers">
           <span data-bind="controller.name"></span>
+          <span data-bind="controller.action"></span>
+          <span data-bind="controller.path"></span>
+        </li>
+      </ul>
+
+      <h3>Models</h3>
+      <ul>
+        <li data-foreach-model="dashboard.models">
+          <span data-bind="model.name"></span>
+        </li>
+      </ul>
+
+      <h3>Views</h3>
+      <ul>
+        <li data-foreach-view="dashboard.views">
+          <span data-bind="view.name"></span>
         </li>
       </ul>
     </div>

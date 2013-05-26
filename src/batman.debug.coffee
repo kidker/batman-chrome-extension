@@ -9,7 +9,6 @@ class window.BatmanDebug
           window.postMessage {id: event.data.id, from: 'batman.debug', data: res}, '*'
 
   handleMessage: (msg, cb) ->
-    console.log 'message received', msg
     switch msg.type
       when 'ping'
         cb type: 'pong'
@@ -19,8 +18,6 @@ class window.BatmanDebug
         console.log 'Unknown message', msg
 
   storageAdapter: (key, options, cb) ->
-    console.log 'storageAdapter args', arguments
-
     [action, modelName] = key.split('::')
     modelName = Batman.helpers.camelize(modelName)
 
@@ -28,17 +25,34 @@ class window.BatmanDebug
 
 
 class BatmanDebug.DebugController
+  constructor: (@name) ->
+    instanceName = @name.substr(0, @name.length - 'Controller'.length)
+    @instanceName = Batman.helpers.underscore(instanceName)
+    @instance = Batman.currentApp.get("controllers.#{instanceName}")
+
+  isCurrentController: ->
+    Batman.currentApp.get('currentRoute.controller') is @instanceName
+
+  toJSON: ->
+    id: @instance._batmanID()
+    name: @name
+    action: @instance.get('action')
+    path: @instance.get('params.path')
+    current: @isCurrentController()
+
   @readAll: (options, cb) ->
     controllers = []
-    for name, attr of Batman.currentApp
-      controllers.push({name}) if attr.prototype instanceof Batman.Controller
+    for own name, attr of Batman.currentApp
+      if attr.prototype instanceof Batman.Controller
+        controller = new @(name)
+        controllers.push(controller.toJSON())
 
     cb(controllers)
 
 class BatmanDebug.DebugModel
   @readAll: (options, cb) ->
     models = []
-    for name, attr of Batman.currentApp
+    for own name, attr of Batman.currentApp
       models.push({name}) if attr.prototype instanceof Batman.Model
 
     cb(models)
@@ -46,7 +60,7 @@ class BatmanDebug.DebugModel
 class BatmanDebug.DebugView
   @readAll: (options, cb) ->
     views = []
-    for name, attr of Batman.currentApp
+    for own name, attr of Batman.currentApp
       views.push({name}) if attr.prototype instanceof Batman.Model
 
     cb(views)
