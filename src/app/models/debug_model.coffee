@@ -3,4 +3,4 @@ class Batbelt.DebugModel extends Batman.Model
 
   @persist Batbelt.Storage
 
-  @encode 'name'
+  @encode 'name', 'instances'

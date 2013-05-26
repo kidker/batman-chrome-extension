@@ -96,10 +96,30 @@
   })();
 
   BatmanDebug.DebugModel = (function() {
-    function DebugModel() {}
+    function DebugModel(name) {
+      this.name = name;
+      this.instances = Batman.currentApp[this.name].get('loaded');
+    }
+
+    DebugModel.prototype.serializeInstances = function() {
+      return this.instances.map(function(model) {
+        var obj;
+
+        obj = model.toJSON();
+        obj.id = model._batmanID();
+        return obj;
+      });
+    };
+
+    DebugModel.prototype.toJSON = function() {
+      return {
+        name: this.name,
+        instances: this.serializeInstances()
+      };
+    };
 
     DebugModel.readAll = function(options, cb) {
-      var attr, models, name, _ref;
+      var attr, model, models, name, _ref;
 
       models = [];
       _ref = Batman.currentApp;
@@ -107,9 +127,8 @@
         if (!__hasProp.call(_ref, name)) continue;
         attr = _ref[name];
         if (attr.prototype instanceof Batman.Model) {
-          models.push({
-            name: name
-          });
+          model = new this(name);
+          models.push(model.toJSON());
         }
       }
       return cb(models);

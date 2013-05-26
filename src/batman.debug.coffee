@@ -50,10 +50,25 @@ class BatmanDebug.DebugController
     cb(controllers)
 
 class BatmanDebug.DebugModel
+  constructor: (@name) ->
+    @instances = Batman.currentApp[@name].get('loaded')
+
+  serializeInstances: ->
+    @instances.map (model) ->
+      obj = model.toJSON()
+      obj.id = model._batmanID()
+      obj
+
+  toJSON: ->
+    name: @name
+    instances: @serializeInstances()
+
   @readAll: (options, cb) ->
     models = []
     for own name, attr of Batman.currentApp
-      models.push({name}) if attr.prototype instanceof Batman.Model
+      if attr.prototype instanceof Batman.Model
+        model = new @(name)
+        models.push(model.toJSON())
 
     cb(models)
 

@@ -16,7 +16,7 @@
 
     DebugModel.persist(Batbelt.Storage);
 
-    DebugModel.encode('name');
+    DebugModel.encode('name', 'instances');
 
     return DebugModel;
 
