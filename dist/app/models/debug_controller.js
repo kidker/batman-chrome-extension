@@ -16,7 +16,7 @@
 
     DebugController.persist(Batbelt.Storage);
 
-    DebugController.encode('name', 'action', 'path', 'current', 'properties');
+    DebugController.encode('name', 'action', 'path', 'current');
 
     return DebugController;
 
