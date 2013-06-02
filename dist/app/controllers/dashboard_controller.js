@@ -18,13 +18,20 @@
       var dash;
 
       this.set('dashboard', dash = new Batbelt.Dashboard);
-      Batbelt.DebugController.load(this.errorHandler(function(controllers) {
+      Batbelt.AppController.load(this.errorHandler(function(controllers) {
         return dash.set('controllers', controllers);
       }));
-      Batbelt.DebugModel.load(this.errorHandler(function(models) {
-        return dash.set('models', models);
+      Batbelt.AppModel.load(this.errorHandler(function(models) {
+        dash.set('models', models);
+        return models.forEach(function(model) {
+          return model.get('instances').forEach(function(instance) {
+            return instance.appObserve('title', function() {
+              return console.log('title changed', arguments);
+            });
+          });
+        });
       }));
-      return Batbelt.DebugView.load(this.errorHandler(function(views) {
+      return Batbelt.AppView.load(this.errorHandler(function(views) {
         return dash.set('views', views);
       }));
     };

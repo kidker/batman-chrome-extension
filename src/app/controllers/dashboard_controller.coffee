@@ -4,11 +4,15 @@ class Batbelt.DashboardController extends Batman.Controller
   show: (params) ->
     @set 'dashboard', dash = new Batbelt.Dashboard
 
-    Batbelt.DebugController.load @errorHandler (controllers) ->
+    Batbelt.AppController.load @errorHandler (controllers) ->
       dash.set('controllers', controllers)
 
-    Batbelt.DebugModel.load @errorHandler (models) ->
+    Batbelt.AppModel.load @errorHandler (models) ->
       dash.set('models', models)
+      models.forEach (model) ->
+        model.get('instances').forEach (instance) ->
+          instance.appObserve 'title', ->
+            console.log 'title changed', arguments
 
-    Batbelt.DebugView.load @errorHandler (views) ->
+    Batbelt.AppView.load @errorHandler (views) ->
       dash.set('views', views)
