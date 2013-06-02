@@ -2,7 +2,7 @@ messageId = 0
 responseFunctions = {}
 
 window.addEventListener 'message', (event) ->
-  if event.data.from is 'batman.debug'
+  if event.data.for is 'batbelt'
     sendResponse = responseFunctions[event.data.id]
     sendResponse event.data.data if sendResponse
     delete responseFunctions[event.data.id]
