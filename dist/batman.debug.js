@@ -6,6 +6,8 @@
   window.BatmanDebug = (function() {
     function BatmanDebug() {}
 
+    BatmanDebug.objectMap = new Batman.Hash;
+
     BatmanDebug.prototype.init = function() {
       return this.messageListener();
     };
@@ -18,7 +20,7 @@
           return _this.handleMessage(event.data.data, function(res) {
             return window.postMessage({
               id: event.data.id,
-              from: 'batman.debug',
+              "for": 'batbelt',
               data: res
             }, '*');
           });
@@ -34,6 +36,8 @@
           });
         case 'storageAdapter':
           return this.storageAdapter(msg.key, msg.options, cb);
+        case 'observeProperty':
+          return this.observeProperty(msg.id, msg.property, cb);
         default:
           return console.log('Unknown message', msg);
       }
@@ -47,25 +51,32 @@
       return BatmanDebug[modelName][action](options, cb);
     };
 
+    BatmanDebug.prototype.observeProperty = function(id, property, cb) {
+      var _ref;
+
+      return (_ref = this.objectMap.get(id)) != null ? _ref.observe(property, cb) : void 0;
+    };
+
     return BatmanDebug;
 
   })();
 
-  BatmanDebug.DebugController = (function() {
-    function DebugController(name) {
+  BatmanDebug.AppController = (function() {
+    function AppController(name) {
       var instanceName;
 
       this.name = name;
       instanceName = this.name.substr(0, this.name.length - 'Controller'.length);
       this.instanceName = Batman.helpers.underscore(instanceName);
       this.instance = Batman.currentApp.get("controllers." + instanceName);
+      BatmanDebug.objectMap.set(this.instance._batmanID(), this.instance);
     }
 
-    DebugController.prototype.isCurrentController = function() {
+    AppController.prototype.isCurrentController = function() {
       return Batman.currentApp.get('currentRoute.controller') === this.instanceName;
     };
 
-    DebugController.prototype.toJSON = function() {
+    AppController.prototype.toJSON = function() {
       return {
         id: this.instance._batmanID(),
         name: this.name,
@@ -75,7 +86,7 @@
       };
     };
 
-    DebugController.readAll = function(options, cb) {
+    AppController.readAll = function(options, cb) {
       var attr, controller, controllers, name, _ref;
 
       controllers = [];
@@ -91,34 +102,36 @@
       return cb(controllers);
     };
 
-    return DebugController;
+    return AppController;
 
   })();
 
-  BatmanDebug.DebugModel = (function() {
-    function DebugModel(name) {
+  BatmanDebug.AppModel = (function() {
+    function AppModel(name) {
       this.name = name;
       this.instances = Batman.currentApp[this.name].get('loaded');
+      this.instances.forEach(function(instance) {
+        return BatmanDebug.objectMap.set(instance._batmanID(), this.instance);
+      });
     }
 
-    DebugModel.prototype.serializeInstances = function() {
+    AppModel.prototype.serializeInstances = function() {
       return this.instances.map(function(model) {
-        var obj;
-
-        obj = model.toJSON();
-        obj.id = model._batmanID();
-        return obj;
+        return {
+          id: model._batmanID(),
+          properties: model.toJSON()
+        };
       });
     };
 
-    DebugModel.prototype.toJSON = function() {
+    AppModel.prototype.toJSON = function() {
       return {
         name: this.name,
         instances: this.serializeInstances()
       };
     };
 
-    DebugModel.readAll = function(options, cb) {
+    AppModel.readAll = function(options, cb) {
       var attr, model, models, name, _ref;
 
       models = [];
@@ -134,14 +147,14 @@
       return cb(models);
     };
 
-    return DebugModel;
+    return AppModel;
 
   })();
 
-  BatmanDebug.DebugView = (function() {
-    function DebugView() {}
+  BatmanDebug.AppView = (function() {
+    function AppView() {}
 
-    DebugView.readAll = function(options, cb) {
+    AppView.readAll = function(options, cb) {
       var attr, name, views, _ref;
 
       views = [];
@@ -158,7 +171,7 @@
       return cb(views);
     };
 
-    return DebugView;
+    return AppView;
 
   })();
 

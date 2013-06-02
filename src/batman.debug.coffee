@@ -1,4 +1,6 @@
 class window.BatmanDebug
+  @objectMap = new Batman.Hash
+
   init: ->
     @messageListener()
 
@@ -6,7 +8,7 @@ class window.BatmanDebug
     window.addEventListener 'message', (event) =>
       if event.data.for is 'batman.debug'
         @handleMessage event.data.data, (res) ->
-          window.postMessage {id: event.data.id, from: 'batman.debug', data: res}, '*'
+          window.postMessage {id: event.data.id, for: 'batbelt', data: res}, '*'
 
   handleMessage: (msg, cb) ->
     switch msg.type
@@ -14,6 +16,8 @@ class window.BatmanDebug
         cb type: 'pong'
       when 'storageAdapter'
         @storageAdapter(msg.key, msg.options, cb)
+      when 'observeProperty'
+        @observeProperty(msg.id, msg.property, cb)
       else
         console.log 'Unknown message', msg
 
@@ -23,12 +27,16 @@ class window.BatmanDebug
 
     BatmanDebug[modelName][action](options, cb)
 
+  observeProperty: (id, property, cb) ->
+    @objectMap.get(id)?.observe(property, cb)
 
-class BatmanDebug.DebugController
+
+class BatmanDebug.AppController
   constructor: (@name) ->
     instanceName = @name.substr(0, @name.length - 'Controller'.length)
     @instanceName = Batman.helpers.underscore(instanceName)
     @instance = Batman.currentApp.get("controllers.#{instanceName}")
+    BatmanDebug.objectMap.set(@instance._batmanID(), @instance)
 
   isCurrentController: ->
     Batman.currentApp.get('currentRoute.controller') is @instanceName
@@ -49,15 +57,16 @@ class BatmanDebug.DebugController
 
     cb(controllers)
 
-class BatmanDebug.DebugModel
+class BatmanDebug.AppModel
   constructor: (@name) ->
     @instances = Batman.currentApp[@name].get('loaded')
+    @instances.forEach (instance) ->
+      BatmanDebug.objectMap.set(instance._batmanID(), @instance)
 
   serializeInstances: ->
     @instances.map (model) ->
-      obj = model.toJSON()
-      obj.id = model._batmanID()
-      obj
+      id: model._batmanID()
+      properties: model.toJSON()
 
   toJSON: ->
     name: @name
@@ -72,7 +81,7 @@ class BatmanDebug.DebugModel
 
     cb(models)
 
-class BatmanDebug.DebugView
+class BatmanDebug.AppView
   @readAll: (options, cb) ->
     views = []
     for own name, attr of Batman.currentApp

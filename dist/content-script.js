@@ -9,7 +9,7 @@
   window.addEventListener('message', function(event) {
     var sendResponse;
 
-    if (event.data.from === 'batman.debug') {
+    if (event.data["for"] === 'batbelt') {
       sendResponse = responseFunctions[event.data.id];
       if (sendResponse) {
         sendResponse(event.data.data);

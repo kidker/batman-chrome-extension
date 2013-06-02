@@ -4,9 +4,7 @@
     function Panel() {}
 
     Panel.prototype.init = function() {
-      var _this = this;
-
-      return chrome.devtools.panels.create('Batman', 'img/logo.png', 'views/panel.html', function(panel) {});
+      return chrome.devtools.panels.create('Batman', 'img/logo.png', 'views/panel.html', function() {});
     };
 
     return Panel;
