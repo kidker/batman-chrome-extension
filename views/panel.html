@@ -8,11 +8,14 @@
     <script src="../dist/app/app.js"></script>
 
     <script src="../dist/app/lib/storage_adapter.js"></script>
+    <script src="../dist/app/lib/app_observable.js"></script>
+
     <script src="../dist/app/controllers/dashboard_controller.js"></script>
     <script src="../dist/app/models/dashboard.js"></script>
-    <script src="../dist/app/models/debug_controller.js"></script>
-    <script src="../dist/app/models/debug_model.js"></script>
-    <script src="../dist/app/models/debug_view.js"></script>
+    <script src="../dist/app/models/app_controller.js"></script>
+    <script src="../dist/app/models/app_model.js"></script>
+    <script src="../dist/app/models/app_view.js"></script>
+
     <script src="../dist/app/init.js"></script>
   </head>
   <body>
@@ -33,6 +36,17 @@
       <ul>
         <li data-foreach-model="dashboard.models">
           <span data-bind="model.name"></span>
+          <ul>
+            <li data-foreach-instance="model.instances">
+              <span data-bind="instance.id"></span>
+              <ul>
+                <li data-foreach-prop="instance.properties">
+                  <span data-bind="prop.key"></span>
+                  <span data-bind="prop.value"></span>
+                </li>
+              </ul>
+            </li>
+          </ul>
         </li>
       </ul>
 
