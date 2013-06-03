@@ -11,6 +11,8 @@
   Batman.View.prototype.cache = false;
 
   window.Batbelt = (function(_super) {
+    var _this = this;
+
     __extends(Batbelt, _super);
 
     function Batbelt() {
@@ -20,21 +22,38 @@
 
     Batbelt.root('dashboard#show');
 
-    Batbelt.sendMessage = function(msg, cb) {
-      var data;
+    Batbelt.sendMessage = (function() {
+      var callbackFunctions, messageId, port;
 
-      if (cb == null) {
-        cb = function() {};
-      }
-      data = {
-        tabId: chrome.devtools.inspectedWindow.tabId,
-        data: msg
+      messageId = 0;
+      callbackFunctions = {};
+      port = chrome.extension.connect({
+        name: "" + chrome.devtools.inspectedWindow.tabId
+      });
+      port.onMessage.addListener(function(msg) {
+        var cb;
+
+        if (cb = callbackFunctions[msg.id]) {
+          return cb(msg.data);
+        }
+      });
+      return function(msg, cb) {
+        var id;
+
+        id = messageId++;
+        if (cb == null) {
+          cb = function() {};
+        }
+        callbackFunctions[id] = cb;
+        return port.postMessage({
+          data: msg,
+          id: id
+        });
       };
-      return chrome.runtime.sendMessage(data, cb);
-    };
+    })();
 
     return Batbelt;
 
-  })(Batman.App);
+  }).call(this, Batman.App);
 
 }).call(this);

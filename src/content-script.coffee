@@ -1,14 +1,6 @@
-messageId = 0
-responseFunctions = {}
-
 window.addEventListener 'message', (event) ->
   if event.data.for is 'batbelt'
-    sendResponse = responseFunctions[event.data.id]
-    sendResponse event.data.data if sendResponse
-    delete responseFunctions[event.data.id]
+    chrome.extension.sendMessage({id: event.data.id, data: event.data.data})
 
-chrome.runtime.onMessage.addListener (request, sender, sendResponse) ->
-  id = messageId++
-  responseFunctions[id] = sendResponse
-  window.postMessage {id: id, for: 'batman.debug', data: request}, '*'
-  true
+chrome.extension.onMessage.addListener (msg, sender) ->
+  window.postMessage {for: 'batman.debug', id: msg.id, data: msg.data}, '*'

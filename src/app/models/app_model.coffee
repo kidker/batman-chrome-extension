@@ -17,9 +17,14 @@ class Batbelt.AppModelInstance extends Batman.Model
   @mixin Batbelt.AppObservable
 
   @encode 'properties',
-    decode: (obj) ->
-      properties = new Batman.Set
-      properties.add(new Batman({key, value})) for key, value of obj
-      return properties
+    decode: (obj) -> new Batman.Hash(obj)
 
   @belongsTo 'app_model'
+
+  @accessor 'propertyKeys', -> @get('properties').keys()
+
+  constructor: ->
+    super
+    @observe 'properties', (properties) =>
+      properties.forEach (key, value) =>
+        @appObserve key, (newValue) => @set("properties.#{key}", newValue)

@@ -25,10 +25,10 @@ class window.BatmanDebug
     [action, modelName] = key.split('::')
     modelName = Batman.helpers.camelize(modelName)
 
-    BatmanDebug[modelName][action](options, cb)
+    @constructor[modelName][action](options, cb)
 
   observeProperty: (id, property, cb) ->
-    @objectMap.get(id)?.observe(property, cb)
+    @constructor.objectMap.get(id)?.observe(property, cb)
 
 
 class BatmanDebug.AppController
@@ -61,7 +61,7 @@ class BatmanDebug.AppModel
   constructor: (@name) ->
     @instances = Batman.currentApp[@name].get('loaded')
     @instances.forEach (instance) ->
-      BatmanDebug.objectMap.set(instance._batmanID(), @instance)
+      BatmanDebug.objectMap.set(instance._batmanID(), instance)
 
   serializeInstances: ->
     @instances.map (model) ->

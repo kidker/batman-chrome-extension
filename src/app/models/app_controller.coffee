@@ -3,6 +3,6 @@ class Batbelt.AppController extends Batman.Model
 
   @persist Batbelt.Storage
 
-  @classMixin Batbelt.AppObservable
+  @mixin Batbelt.AppObservable
 
   @encode 'name', 'action', 'path', 'current'

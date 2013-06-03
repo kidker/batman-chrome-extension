@@ -40,9 +40,9 @@
             <li data-foreach-instance="model.instances">
               <span data-bind="instance.id"></span>
               <ul>
-                <li data-foreach-prop="instance.properties">
-                  <span data-bind="prop.key"></span>
-                  <span data-bind="prop.value"></span>
+                <li data-foreach-key="instance.propertyKeys">
+                  <span data-bind="key"></span>
+                  <span data-bind="instance.properties[key]"></span>
                 </li>
               </ul>
             </li>

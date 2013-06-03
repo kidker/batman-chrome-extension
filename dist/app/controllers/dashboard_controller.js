@@ -22,14 +22,7 @@
         return dash.set('controllers', controllers);
       }));
       Batbelt.AppModel.load(this.errorHandler(function(models) {
-        dash.set('models', models);
-        return models.forEach(function(model) {
-          return model.get('instances').forEach(function(instance) {
-            return instance.appObserve('title', function() {
-              return console.log('title changed', arguments);
-            });
-          });
-        });
+        return dash.set('models', models);
       }));
       return Batbelt.AppView.load(this.errorHandler(function(views) {
         return dash.set('views', views);

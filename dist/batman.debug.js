@@ -48,13 +48,13 @@
 
       _ref = key.split('::'), action = _ref[0], modelName = _ref[1];
       modelName = Batman.helpers.camelize(modelName);
-      return BatmanDebug[modelName][action](options, cb);
+      return this.constructor[modelName][action](options, cb);
     };
 
     BatmanDebug.prototype.observeProperty = function(id, property, cb) {
       var _ref;
 
-      return (_ref = this.objectMap.get(id)) != null ? _ref.observe(property, cb) : void 0;
+      return (_ref = this.constructor.objectMap.get(id)) != null ? _ref.observe(property, cb) : void 0;
     };
 
     return BatmanDebug;
@@ -111,7 +111,7 @@
       this.name = name;
       this.instances = Batman.currentApp[this.name].get('loaded');
       this.instances.forEach(function(instance) {
-        return BatmanDebug.objectMap.set(instance._batmanID(), this.instance);
+        return BatmanDebug.objectMap.set(instance._batmanID(), instance);
       });
     }
 

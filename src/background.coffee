@@ -1,12 +1,6 @@
-panelId = null
+chrome.extension.onConnect.addListener (port) ->
+  port.onMessage.addListener (msg) ->
+    chrome.tabs.sendMessage(parseInt(port.name, 10), msg)
 
-chrome.runtime.onMessage.addListener (request, sender, sendResponse) ->
-  if request.tabId
-    panelId = sender.tab.id
-    chrome.tabs.sendMessage request.tabId, request.data, (response) ->
-      sendResponse response
-  else if panelId
-    chrome.tabs.sendMessage panelId, request.data, (response) ->
-      sendResponse response
-
-  true
+  chrome.extension.onMessage.addListener (msg, sender) ->
+    port.postMessage(msg)

@@ -16,7 +16,7 @@
 
     AppController.persist(Batbelt.Storage);
 
-    AppController.classMixin(Batbelt.AppObservable);
+    AppController.mixin(Batbelt.AppObservable);
 
     AppController.encode('name', 'action', 'path', 'current');
 

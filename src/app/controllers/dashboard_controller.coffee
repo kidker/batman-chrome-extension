@@ -9,10 +9,6 @@ class Batbelt.DashboardController extends Batman.Controller
 
     Batbelt.AppModel.load @errorHandler (models) ->
       dash.set('models', models)
-      models.forEach (model) ->
-        model.get('instances').forEach (instance) ->
-          instance.appObserve 'title', ->
-            console.log 'title changed', arguments
 
     Batbelt.AppView.load @errorHandler (views) ->
       dash.set('views', views)
