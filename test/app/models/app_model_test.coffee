@@ -1,8 +1,17 @@
 class Batbelt.AppModelTest extends Batman.ModelTestCase
+  oldAppObservable = Batbelt.AppObservable
+
+  Batbelt.AppObservable =
+    initialize: ->
+      @appObserve = sinon.spy()
+
   setup: ->
     @instance = new Batbelt.AppModelInstance
     @instance.appObserve = (@appObserveSpy = sinon.spy())
     @instance.fromJSON(Batbelt.Fixtures.AppModel.instance)
+
+  teardown: ->
+    Batbelt.AppObservable = oldAppObservable
 
   @test 'instance properties should be a Batman.Hash', ->
     @assert @instance.get('properties') instanceof Batman.Hash
