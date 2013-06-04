@@ -2,4 +2,6 @@
 (function() {
   window.Batbelt = {};
 
+  Batbelt.Fixtures = {};
+
 }).call(this);

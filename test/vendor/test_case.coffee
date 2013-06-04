@@ -1,5 +1,5 @@
 class Batman.TestCase
-  class @Test 
+  class @Test
     constructor: (@name, @expected, @testFunction) ->
 
   @test: (name, expected, testFunction) ->
@@ -50,7 +50,7 @@ class Batman.TestCase
     if arguments.length is 2
       callback = difference
       difference = 1
-    else if arguments.length is 3 
+    else if arguments.length is 3
       callback = message
       message = null
 
@@ -65,7 +65,7 @@ class Batman.TestCase
       @assertEqual before[i] + difference, eval(e), error
 
   assertNoDifference: (expressions, message, callback) ->
-    if arguments.length is 2 
+    if arguments.length is 2
       callback = message
       message = null
 

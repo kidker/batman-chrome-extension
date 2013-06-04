@@ -1,1 +1,2 @@
 window.Batbelt = {}
+Batbelt.Fixtures = {}

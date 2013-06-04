@@ -25,6 +25,7 @@ files = [
   'test/vendor/test_case.coffee',
   'test/vendor/model_test_case.coffee',
 
+  'test/fixtures/*.coffee',
   'test/**/*.coffee'
 ];
 
