@@ -1,5 +1,6 @@
 Batman.extend Batman.config,
   pathToApp: '/views/panel.html'
+  pathToHTML: '/src/app/html'
 
 Batman.View::cache = false
 

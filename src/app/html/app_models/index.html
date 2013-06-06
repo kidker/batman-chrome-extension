@@ -1,0 +1,16 @@
+<ul id="model-list">
+  <li data-foreach-model="models">
+    <span data-bind="model.name"></span>
+    <ul>
+      <li data-foreach-instance="model.instances">
+        <span data-bind="instance.id"></span>
+        <ul>
+          <li data-foreach-key="instance.propertyKeys">
+            <span data-bind="key"></span>:&nbsp;
+            <span data-bind="instance.properties[key]"></span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>

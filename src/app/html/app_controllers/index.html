@@ -1,0 +1,27 @@
+<div id="controller-container">
+  <div class="current-controller">
+    <span class="title-desc">Active Controller</span>
+    <h2 class="title-large" data-bind="activeController.name"></h2>
+
+    <ul class="controller-properties">
+      <li class="route-info" data-showif="activeController.current">
+        <span class="label">Route</span>
+        <span class="uri-path" data-bind="activeController.path"></span>→ 
+        <span class="route-path" data-bind="activeController.currentRouteWithKey"></span>
+      </li>
+      <li class="param-info">
+        <span class="label">Params</span> 
+        <ul>
+          <li data-foreach-key="activeController.propertyKeys">
+            <span data-bind="key"></span>:&nbsp;
+            <span data-bind="activeController.properties[key]"></span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <ul id="controller-list">
+    <li data-foreach-controller="controllers" data-addclass-active="activeController | equals controller" class="controller-item" data-event-click="setActive | withArguments controller" data-bind="controller.name"></li>
+  </ul>
+</div>
