@@ -14,14 +14,16 @@ Batbelt.AppViewsController = (function(_super) {
   AppViewsController.prototype.routingKey = 'app_views';
 
   AppViewsController.prototype.index = function() {
+    var _this = this;
     return Batbelt.AppView.load(this.errorHandler(function(views) {
-      return this.set('views', views);
+      return _this.set('views', views);
     }));
   };
 
   AppViewsController.prototype.show = function(params) {
+    var _this = this;
     return Batbelt.AppView.find(params.id, this.errorHandler(function(view) {
-      return this.set('view', view);
+      return _this.set('view', view);
     }));
   };
 

@@ -31,11 +31,11 @@
   <body class="clearfix" >
     <nav id="main-nav">
       <ul>
-        <li><a data-route="routes.dashboard" class="active">Dashboard</a></li>
-        <li><a data-route="routes.appControllers">Controllers</a></li>
-        <li><a data-route="routes.appModels">Models</a></li>
-        <li><a data-route="routes.appViews">Views</a></li>
-        <li><a>Events</a></li>
+        <li><a data-addclass-active="currentRoute.controller | equals 'dashboard'" data-route="routes.dashboard" class="active">Dashboard</a></li>
+        <li><a data-addclass-active="currentRoute.controller | equals 'appControllers'" data-route="routes.appControllers">Controllers</a></li>
+        <li><a data-addclass-active="currentRoute.controller | equals 'appModels'" data-route="routes.appModels">Models</a></li>
+        <li><a data-addclass-active="currentRoute.controller | equals 'appViews'" data-route="routes.appViews">Views</a></li>
+        <li><a data-addclass-active="currentRoute.controller | equals 'events'">Events</a></li>
       </ul>
     </nav>
 

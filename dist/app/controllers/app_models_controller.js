@@ -11,17 +11,19 @@ Batbelt.AppModelsController = (function(_super) {
     return _ref;
   }
 
-  AppModelsController.prototype.routingKey = 'app_model';
+  AppModelsController.prototype.routingKey = 'app_models';
 
   AppModelsController.prototype.index = function() {
+    var _this = this;
     return Batbelt.AppModel.load(this.errorHandler(function(models) {
-      return this.set('models', models);
+      return _this.set('models', models);
     }));
   };
 
   AppModelsController.prototype.show = function(params) {
+    var _this = this;
     return Batbelt.AppModel.find(params.id, this.errorHandler(function(model) {
-      return this.set('model', model);
+      return _this.set('model', model);
     }));
   };
 
