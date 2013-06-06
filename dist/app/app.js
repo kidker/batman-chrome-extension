@@ -39,7 +39,10 @@ window.Batbelt = (function(_super) {
     port.onMessage.addListener(function(msg) {
       var cb;
       if (cb = callbackFunctions[msg.id]) {
-        return cb(msg.data);
+        cb(msg.data);
+        if (msg.options.close) {
+          return delete callbackFunctions[msg.id];
+        }
       }
     });
     return function(msg, cb) {

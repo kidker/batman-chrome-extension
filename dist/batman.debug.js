@@ -15,13 +15,17 @@ window.BatmanDebug = (function() {
     var _this = this;
     return window.addEventListener('message', function(event) {
       if (event.data["for"] === 'batman.debug') {
-        return _this.handleMessage(event.data.data, function(res) {
+        return _this.handleMessage(event.data.data, function(res, options) {
           var data;
+          if (options == null) {
+            options = {};
+          }
           data = JSON.stringify(_this.constructor.prettify(res));
           return window.postMessage({
             id: event.data.id,
             "for": 'batbelt',
-            data: data
+            data: data,
+            options: options
           }, '*');
         });
       }
@@ -47,7 +51,11 @@ window.BatmanDebug = (function() {
     var action, modelName, _ref;
     _ref = key.split('::'), action = _ref[0], modelName = _ref[1];
     modelName = Batman.helpers.camelize(modelName);
-    return this.constructor[modelName][action](options, cb);
+    return this.constructor[modelName][action](options, function(res) {
+      return cb(res, {
+        close: true
+      });
+    });
   };
 
   BatmanDebug.prototype.observeProperty = function(id, property, cb) {

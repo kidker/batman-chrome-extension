@@ -21,6 +21,7 @@ class window.Batbelt extends Batman.App
     port.onMessage.addListener (msg) ->
       if cb = callbackFunctions[msg.id]
         cb(msg.data)
+        delete callbackFunctions[msg.id] if msg.options.close
 
     (msg, cb) =>
       id = messageId++
