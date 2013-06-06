@@ -49,15 +49,8 @@ Batbelt.AppModelInstance = (function(_super) {
   });
 
   function AppModelInstance() {
-    var _this = this;
     AppModelInstance.__super__.constructor.apply(this, arguments);
-    this.observe('properties', function(properties) {
-      return properties.forEach(function(key, value) {
-        return _this.appObserve(key, function(newValue) {
-          return _this.set("properties." + key, newValue);
-        });
-      });
-    });
+    this.observeProperties();
   }
 
   return AppModelInstance;

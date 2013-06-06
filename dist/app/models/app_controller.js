@@ -31,6 +31,33 @@ Batbelt.AppController = (function(_super) {
     return "" + (Batman.helpers.underscore(name)) + "#" + (this.get('action'));
   });
 
+  AppController.accessor('id', {
+    get: function() {
+      return this.id;
+    },
+    set: function(_, newId) {
+      this.id = newId;
+      return this.initObservers();
+    }
+  });
+
+  AppController.prototype.initObservers = function() {
+    var param, _i, _len, _ref1, _results,
+      _this = this;
+    this.observeProperties();
+    _ref1 = ['name', 'action', 'path', 'current'];
+    _results = [];
+    for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+      param = _ref1[_i];
+      _results.push((function(param) {
+        return _this.appObserve(param, function(value) {
+          return _this.set(param, value);
+        });
+      })(param));
+    }
+    return _results;
+  };
+
   return AppController;
 
 })(Batman.Model);

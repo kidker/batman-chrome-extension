@@ -25,6 +25,4 @@ class Batbelt.AppModelInstance extends Batman.Model
 
   constructor: ->
     super
-    @observe 'properties', (properties) =>
-      properties.forEach (key, value) =>
-        @appObserve key, (newValue) => @set("properties.#{key}", newValue)
+    @observeProperties()

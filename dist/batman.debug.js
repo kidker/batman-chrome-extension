@@ -60,7 +60,11 @@ window.BatmanDebug = (function() {
 
   BatmanDebug.prototype.observeProperty = function(id, property, cb) {
     var _ref;
-    return (_ref = BatmanDebug.objectMap.get(id)) != null ? _ref.observe(property, cb) : void 0;
+    return (_ref = BatmanDebug.objectMap.get(id)) != null ? _ref.observe(property, function(newValue) {
+      return cb(newValue, {
+        close: false
+      });
+    }) : void 0;
   };
 
   return BatmanDebug;

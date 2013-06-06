@@ -7,3 +7,8 @@ Batbelt.AppObservable =
         property: property
 
       Batbelt.sendMessage(msg, cb)
+
+    @observeProperties = ->
+      @observe 'properties', (properties) =>
+        properties.forEach (key, value) =>
+          @appObserve key, (newValue) => @set("properties.#{key}", newValue)

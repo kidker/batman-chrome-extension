@@ -30,7 +30,8 @@ class window.BatmanDebug
       cb(res, {close: true})
 
   observeProperty: (id, property, cb) ->
-    BatmanDebug.objectMap.get(id)?.observe(property, cb)
+    BatmanDebug.objectMap.get(id)?.observe property, (newValue) ->
+      cb(newValue, {close: false})
 
 class BatmanDebug.AppController
   constructor: (@name) ->
