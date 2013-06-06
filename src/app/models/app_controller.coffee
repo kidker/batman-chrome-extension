@@ -10,6 +10,8 @@ class Batbelt.AppController extends Batman.Model
   @encode 'properties',
     decode: (obj) -> new Batman.Hash(obj)
 
+  @accessor 'propertyKeys', -> @get('properties').keys()
+  
   @accessor 'currentRouteWithKey', ->
     name = @get('name').substring(0, @get('name').length-"Controller".length)
     "#{Batman.helpers.underscore(name)}##{@get('action')}"

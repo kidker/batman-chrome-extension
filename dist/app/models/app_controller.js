@@ -25,6 +25,10 @@ Batbelt.AppController = (function(_super) {
     }
   });
 
+  AppController.accessor('propertyKeys', function() {
+    return this.get('properties').keys();
+  });
+
   AppController.accessor('currentRouteWithKey', function() {
     var name;
     name = this.get('name').substring(0, this.get('name').length - "Controller".length);
