@@ -3,7 +3,7 @@ window.addEventListener('message', function(event) {
   if (event.data["for"] === 'batbelt') {
     return chrome.extension.sendMessage({
       id: event.data.id,
-      data: event.data.data
+      data: JSON.parse(event.data.data)
     });
   }
 });

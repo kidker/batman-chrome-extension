@@ -16,10 +16,12 @@ window.BatmanDebug = (function() {
     return window.addEventListener('message', function(event) {
       if (event.data["for"] === 'batman.debug') {
         return _this.handleMessage(event.data.data, function(res) {
+          var data;
+          data = JSON.stringify(_this.constructor.prettify(res));
           return window.postMessage({
             id: event.data.id,
             "for": 'batbelt',
-            data: res
+            data: data
           }, '*');
         });
       }

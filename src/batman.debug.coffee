@@ -7,8 +7,9 @@ class window.BatmanDebug
   messageListener: ->
     window.addEventListener 'message', (event) =>
       if event.data.for is 'batman.debug'
-        @handleMessage event.data.data, (res) ->
-          window.postMessage {id: event.data.id, for: 'batbelt', data: res}, '*'
+        @handleMessage event.data.data, (res) =>
+          data = JSON.stringify(@constructor.prettify(res))
+          window.postMessage {id: event.data.id, for: 'batbelt', data: data}, '*'
 
   handleMessage: (msg, cb) ->
     switch msg.type

@@ -1,6 +1,11 @@
+nameForObject = (obj) ->
+  if obj
+    return obj.constructor.name if obj.constructor?.name
+    return obj.name if obj.name
+
 window.$prettify = (obj, stack = []) ->
   if obj in stack
-    return "Circular reference"
+    return "[circular #{nameForObject(obj)}]"
   stack.push(obj)
 
   if not obj
@@ -35,7 +40,7 @@ window.$prettify = (obj, stack = []) ->
     # don't deal with this right now
     pretty = 'Batman.RenderContext'
 
-  else if obj.constructor && obj.call && obj.apply
+  else if obj.constructor and obj.call and obj.apply
     # if we have the prototype for a model
     if obj.get and obj.storageKey and loaded = obj.get('loaded')
       pretty = $prettify(loaded, stack)
