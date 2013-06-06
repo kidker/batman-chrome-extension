@@ -26,7 +26,8 @@ Batbelt.AppControllersController = (function(_super) {
 
   AppControllersController.prototype.index = function() {
     return Batbelt.AppController.load(this.errorHandler(function(controllers) {
-      return this.set('controllers', controllers);
+      this.set('controllers', controllers);
+      return this.set('activeController', _getCurrentController(controllers));
     }));
   };
 
@@ -34,6 +35,20 @@ Batbelt.AppControllersController = (function(_super) {
     return Batbelt.AppController.find(params.id, this.errorHandler(function(controller) {
       return this.set('controller', controller);
     }));
+  };
+
+  AppControllersController.prototype.setActive = function(controller) {
+    return this.set('activeController', controller);
+  };
+
+  AppControllersController.prototype._getCurrentController = function(controllers) {
+    var controller, _i, _len;
+    for (_i = 0, _len = controllers.length; _i < _len; _i++) {
+      controller = controllers[_i];
+      if (controller.get('current')) {
+        return controller;
+      }
+    }
   };
 
   return AppControllersController;

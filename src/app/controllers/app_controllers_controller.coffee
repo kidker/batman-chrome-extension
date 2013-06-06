@@ -16,6 +16,6 @@ class Batbelt.AppControllersController extends Batman.Controller
 
   setActive: (controller) -> @set('activeController', controller)
 
-  _getCurrentController: (controllers)
+  _getCurrentController: (controllers) ->
     for controller in controllers
       return controller if controller.get('current')
