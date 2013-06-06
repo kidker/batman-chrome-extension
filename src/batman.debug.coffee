@@ -77,7 +77,8 @@ class BatmanDebug.AppModel
     for own name, attr of Batman.currentApp
       if attr.prototype instanceof Batman.Model
         model = new @(name)
-        models.push(model.toJSON())
+        if model.instances.length
+          models.push(model.toJSON())
 
     cb(models)
 

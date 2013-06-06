@@ -134,7 +134,9 @@ BatmanDebug.AppModel = (function() {
       attr = _ref[name];
       if (attr.prototype instanceof Batman.Model) {
         model = new this(name);
-        models.push(model.toJSON());
+        if (model.instances.length) {
+          models.push(model.toJSON());
+        }
       }
     }
     return cb(models);
