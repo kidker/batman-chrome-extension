@@ -13,17 +13,16 @@ Batbelt.DashboardController = (function(_super) {
 
   DashboardController.prototype.routingKey = 'dashboard';
 
-  DashboardController.prototype.show = function(params) {
-    var dash;
-    this.set('dashboard', dash = new Batbelt.Dashboard);
+  DashboardController.prototype.index = function() {
+    var _this = this;
     Batbelt.AppController.load(this.errorHandler(function(controllers) {
-      return dash.set('controllers', controllers);
+      return _this.set('controllers', controllers);
     }));
     Batbelt.AppModel.load(this.errorHandler(function(models) {
-      return dash.set('models', models);
+      return _this.set('models', models);
     }));
     return Batbelt.AppView.load(this.errorHandler(function(views) {
-      return dash.set('views', views);
+      return _this.set('views', views);
     }));
   };
 

@@ -10,6 +10,7 @@ Batbelt.injectDebugger = function(cb) {
 
 jQuery(function() {
   return Batbelt.injectDebugger(function() {
+    debugger;
     return Batbelt.run();
   });
 });

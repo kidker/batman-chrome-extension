@@ -19,7 +19,15 @@ window.Batbelt = (function(_super) {
     return _ref;
   }
 
-  Batbelt.root('dashboard#show');
+  Batbelt.root('dashboard#index');
+
+  Batbelt.route('dashboard', 'dashboard#index');
+
+  Batbelt.resources('app_controllers');
+
+  Batbelt.resources('app_models');
+
+  Batbelt.resources('app_views');
 
   Batbelt.sendMessage = (function() {
     var callbackFunctions, messageId, port;

@@ -16,7 +16,10 @@
     <script src="../dist/app/lib/app_observable.js"></script>
 
     <script src="../dist/app/controllers/dashboard_controller.js"></script>
-    <script src="../dist/app/models/dashboard.js"></script>
+    <script src="../dist/app/controllers/app_controllers_controller.js"></script>
+    <script src="../dist/app/controllers/app_models_controller.js"></script>
+    <script src="../dist/app/controllers/app_views_controller.js"></script>
+
     <script src="../dist/app/models/app_controller.js"></script>
     <script src="../dist/app/models/app_model.js"></script>
     <script src="../dist/app/models/app_view.js"></script>
@@ -27,28 +30,36 @@
     <nav id="sidebar">
       <ul>
         <li><a data-route="routes.dashboard">Dashboard</a></li>
-        <li><a data-route="routes.controllers">Controllers</a></li>
-        <li><a data-route="routes.models">Models</a></li>
-        <li><a data-route="routes.view">Views</a></li>
-        <li><a data-route="routes.events">Events</a></li>
+        <li><a data-route="routes.appControllers">Controllers</a></li>
+        <li><a data-route="routes.appModels">Models</a></li>
+        <li><a data-route="routes.appViews">Views</a></li>
+        <li><a>Events</a></li>
       </ul>
     </nav>
 
     <div data-yield="main"></div>
     
-    <div data-defineview="dashboard/show">
+    <div data-defineview="dashboard/index">
+      <div data-partial="app_controllers/index"></div>
+      <div data-partial="app_models/index"></div>
+      <div data-partial="app_views/index"></div>
+    </div>
+
+    <div data-defineview="app_controllers/index">
       <h3>Controllers</h3>
       <ul>
-        <li data-foreach-controller="dashboard.controllers">
+        <li data-foreach-controller="controllers">
           <span data-bind="controller.name"></span>
           <span data-bind="controller.action"></span>
           <span data-bind="controller.path"></span>
         </li>
       </ul>
+    </div>
 
+    <div data-defineview="app_models/index">
       <h3>Models</h3>
       <ul>
-        <li data-foreach-model="dashboard.models">
+        <li data-foreach-model="models">
           <span data-bind="model.name"></span>
           <ul>
             <li data-foreach-instance="model.instances">
@@ -63,10 +74,12 @@
           </ul>
         </li>
       </ul>
+    </div>
 
+    <div data-defineview="app_views/index">
       <h3>Views</h3>
       <ul>
-        <li data-foreach-view="dashboard.views">
+        <li data-foreach-view="views">
           <span data-bind="view.name"></span>
         </li>
       </ul>

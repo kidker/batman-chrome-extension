@@ -8,4 +8,4 @@ Batbelt.injectDebugger = (cb) ->
   chrome.devtools.inspectedWindow.eval xhr.responseText, cb
 
 jQuery ->
-  Batbelt.injectDebugger -> Batbelt.run()
+  Batbelt.injectDebugger -> debugger; Batbelt.run()

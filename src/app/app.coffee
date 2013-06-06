@@ -4,7 +4,13 @@ Batman.extend Batman.config,
 Batman.View::cache = false
 
 class window.Batbelt extends Batman.App
-  @root 'dashboard#show'
+  @root 'dashboard#index'
+
+  @route 'dashboard', 'dashboard#index'
+
+  @resources 'app_controllers'
+  @resources 'app_models'
+  @resources 'app_views'
 
   @sendMessage: do =>
     messageId = 0
