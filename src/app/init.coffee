@@ -1,11 +1,12 @@
 Batbelt.injectDebugger = (cb) ->
-  url = chrome.extension.getURL 'dist/batman.debug.js'
+  js = ""
+  for url in ['dist/batman.debug.js', 'dist/batman.shared.js']
+    xhr = new XMLHttpRequest()
+    xhr.open('GET', chrome.extension.getURL(url), false)
+    xhr.send()
+    js += xhr.responseText + ";\n"
 
-  xhr = new XMLHttpRequest()
-  xhr.open('GET', url, false)
-  xhr.send()
-
-  chrome.devtools.inspectedWindow.eval xhr.responseText, cb
+  chrome.devtools.inspectedWindow.eval js, cb
 
 jQuery ->
   Batbelt.injectDebugger -> debugger; Batbelt.run()
