@@ -31,7 +31,7 @@
   <body class="clearfix" >
     <nav id="main-nav">
       <ul>
-        <li><a data-addclass-active="currentRoute.controller | equals 'dashboard'" data-route="routes.dashboard" class="active">Dashboard</a></li>
+        <li><a data-addclass-active="currentRoute.controller | equals 'dashboard'" data-route="routes.dashboard">Dashboard</a></li>
         <li><a data-addclass-active="currentRoute.controller | equals 'appControllers'" data-route="routes.appControllers">Controllers</a></li>
         <li><a data-addclass-active="currentRoute.controller | equals 'appModels'" data-route="routes.appModels">Models</a></li>
         <li><a data-addclass-active="currentRoute.controller | equals 'appViews'" data-route="routes.appViews">Views</a></li>
@@ -52,26 +52,20 @@
           <h2 class="title-large" data-bind="activeController.name"></h2>
 
           <ul class="controller-properties">
-            <li>
+            <li class="route-info" data-showif="activeController.current">
               <span class="label">Route</span>
               <span class="uri-path" data-bind="activeController.path"></span>→ 
-              <span class="route-path" data-bind="activeController.action"></span>
+              <span class="route-path" data-bind="activeController.currentRouteWithKey"></span>
             </li>
-            <li>
+            <li class="param-info">
               <span class="label">Params</span> 
-              <span class="object-raw" data-bind="activeController.params">{id: 46}</span>
+              <span class="object-raw" data-bind="activeController.properties">{id: 46}</span>
             </li>
           </ul>
         </div>
 
         <ul id="controller-list">
-          <li data-foreach-controller="controllers">
-            <div data-event-click="setActive | withArguments controller">
-              <span data-bind="controller.name"></span>
-              <span data-bind="controller.action"></span>
-              <span data-bind="controller.path"></span>
-            </div>
-          </li>
+          <li data-foreach-controller="controllers" data-addclass-active="activeController | equals controller" class="controller-item" data-event-click="setActive | withArguments controller" data-bind="controller.name"></li>
         </ul>
       </div>
     </div>
