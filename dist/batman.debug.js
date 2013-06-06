@@ -74,13 +74,14 @@ BatmanDebug.AppController = (function() {
   };
 
   AppController.prototype.toJSON = function() {
-    return {
-      id: this.instance._batmanID(),
-      name: this.name,
-      action: this.instance.get('action'),
-      path: this.instance.get('params.path'),
-      current: this.isCurrentController()
-    };
+    var obj;
+    obj = BatmanDebug.prettify(this.instance);
+    obj.id = this.instance._batmanID();
+    obj.name = this.name;
+    obj.action = this.instance.get('action');
+    obj.path = this.instance.get('params.path');
+    obj.current = this.isCurrentController();
+    return obj;
   };
 
   AppController.readAll = function(options, cb) {
