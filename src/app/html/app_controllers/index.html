@@ -11,12 +11,7 @@
       </li>
       <li class="param-info">
         <span class="label">Params</span> 
-        <ul>
-          <li data-foreach-key="activeController.propertyKeys">
-            <span data-bind="key"></span>:&nbsp;
-            <span data-bind="activeController.properties[key]"></span>
-          </li>
-        </ul>
+        <div data-view="PropertiesView" data-view-properties="activeController.properties"></div>
       </li>
     </ul>
   </div>
