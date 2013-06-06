@@ -8,7 +8,7 @@ class window.BatmanDebug
     window.addEventListener 'message', (event) =>
       if event.data.for is 'batman.debug'
         @handleMessage event.data.data, (res, options = {}) =>
-          data = JSON.stringify(@constructor.prettify(res))
+          data = JSON.stringify(BatmanDebug.prettify(res))
           window.postMessage {id: event.data.id, for: 'batbelt', data, options}, '*'
 
   handleMessage: (msg, cb) ->
@@ -26,11 +26,11 @@ class window.BatmanDebug
     [action, modelName] = key.split('::')
     modelName = Batman.helpers.camelize(modelName)
 
-    @constructor[modelName][action] options, (res) ->
+    BatmanDebug[modelName][action] options, (res) ->
       cb(res, {close: true})
 
   observeProperty: (id, property, cb) ->
-    @constructor.objectMap.get(id)?.observe(property, cb)
+    BatmanDebug.objectMap.get(id)?.observe(property, cb)
 
 class BatmanDebug.AppController
   constructor: (@name) ->

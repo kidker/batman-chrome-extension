@@ -20,7 +20,7 @@ window.BatmanDebug = (function() {
           if (options == null) {
             options = {};
           }
-          data = JSON.stringify(_this.constructor.prettify(res));
+          data = JSON.stringify(BatmanDebug.prettify(res));
           return window.postMessage({
             id: event.data.id,
             "for": 'batbelt',
@@ -51,7 +51,7 @@ window.BatmanDebug = (function() {
     var action, modelName, _ref;
     _ref = key.split('::'), action = _ref[0], modelName = _ref[1];
     modelName = Batman.helpers.camelize(modelName);
-    return this.constructor[modelName][action](options, function(res) {
+    return BatmanDebug[modelName][action](options, function(res) {
       return cb(res, {
         close: true
       });
@@ -60,7 +60,7 @@ window.BatmanDebug = (function() {
 
   BatmanDebug.prototype.observeProperty = function(id, property, cb) {
     var _ref;
-    return (_ref = this.constructor.objectMap.get(id)) != null ? _ref.observe(property, cb) : void 0;
+    return (_ref = BatmanDebug.objectMap.get(id)) != null ? _ref.observe(property, cb) : void 0;
   };
 
   return BatmanDebug;
