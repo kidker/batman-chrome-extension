@@ -19,6 +19,18 @@ Batbelt.AppController = (function(_super) {
 
   AppController.encode('name', 'action', 'path', 'current');
 
+  AppController.encode('properties', {
+    decode: function(obj) {
+      return new Batman.Hash(obj);
+    }
+  });
+
+  AppController.accessor('currentRouteWithKey', function() {
+    var name;
+    name = this.get('name').substring(0, this.get('name').length - "Controller".length);
+    return "" + (Batman.helpers.underscore(name)) + "#" + (this.get('action'));
+  });
+
   return AppController;
 
 })(Batman.Model);
