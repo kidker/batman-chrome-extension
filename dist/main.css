@@ -59,11 +59,7 @@ h3 {
   margin-top: 43px;
   padding: 0;
   width: 100%;
-  font-family: 'Menlo', monospace;
-  bottom: 0;
-  overflow: auto;
-  position: absolute;
-  top: 0; }
+  font-family: 'Menlo', monospace; }
   #controller-list .controller-item {
     font-size: 13px;
     padding: 10px;
@@ -134,6 +130,12 @@ h3 {
     padding: 2px 5px; }
   .current-controller .route-info {
     color: #aaa8ba; }
+
+#controller-list, #model-list, #view-list {
+  bottom: 0;
+  overflow: auto;
+  position: absolute;
+  top: 0; }
 
 /* UTILS */
 .clearfix:before, .clearfix:after {
