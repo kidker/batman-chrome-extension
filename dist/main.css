@@ -1,0 +1,16 @@
+body {
+  background-color: #EAEBFB;
+  color: #171722; }
+
+#sidebar {
+  background-color: #1F1F27;
+  height: 60px; }
+  #sidebar ul {
+    list-style: none; }
+  #sidebar li a {
+    color: #A2A2BA;
+    text-align: center;
+    padding: 15px; }
+    #sidebar li a:hover {
+      background-color: #2A2A32;
+      color: #FFFFFF; }
