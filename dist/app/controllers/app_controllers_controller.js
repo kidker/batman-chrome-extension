@@ -13,6 +13,17 @@ Batbelt.AppControllersController = (function(_super) {
 
   AppControllersController.prototype.routingKey = 'app_controllers';
 
+  AppControllersController.accessor('currentController', function() {
+    var controller, _i, _len, _ref1;
+    _ref1 = this.get('controllers');
+    for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+      controller = _ref1[_i];
+      if (controller.get('current')) {
+        return controller;
+      }
+    }
+  });
+
   AppControllersController.prototype.index = function() {
     return Batbelt.AppController.load(this.errorHandler(function(controllers) {
       return this.set('controllers', controllers);
