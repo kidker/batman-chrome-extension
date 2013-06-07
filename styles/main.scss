@@ -69,6 +69,8 @@ h3 { margin: 0; padding: 0; }
         padding: 0;
         list-style: none;
         width: 100%;
+        margin-bottom: 0;
+        margin-top: 8px;
     }
 
     .controller-item {
@@ -95,6 +97,7 @@ h3 { margin: 0; padding: 0; }
     font-size: 9px;
     vertical-align: middle;
     display: inline-block;
+    float: left;
     min-width: 40px;
     margin-right: 8px;
 }
@@ -102,7 +105,7 @@ h3 { margin: 0; padding: 0; }
 .controller-properties {
     list-style: none;
     padding: 0;
-    li {
+    .prop {
         min-height: 20px;
         margin-bottom: 3px;
     }
@@ -164,6 +167,45 @@ h3 { margin: 0; padding: 0; }
     position: absolute;
     top: 0;
 }
+
+
+
+
+/* Object Styling*/
+.obj-properties-list {
+    float: left;
+}
+
+.obj-list {
+    font-family: "Menlo", monospace;
+    font-size: 11px;
+    list-style: none;
+    padding-left: 0;
+
+    .obj-list { padding-left: 20px; }
+}
+
+.obj {
+    .obj-key {
+        color: #716e7c;
+    }
+
+    .obj-preview {
+        color: #777;
+        font-style: italic;
+        cursor: pointer;
+        background: #fff;
+
+        &:hover {
+            background: #f1f1f1;
+        }
+    }
+
+    .obj-value {
+        color: #00f;
+    }
+}
+
 
 /* UTILS */
 .clearfix:before, .clearfix:after { content:""; display:table; }

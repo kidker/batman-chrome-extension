@@ -4,14 +4,14 @@
     <h2 class="title-large" data-bind="activeController.name"></h2>
 
     <ul class="controller-properties">
-      <li class="route-info" data-showif="activeController.current">
+      <li class="prop route-info" data-showif="activeController.current">
         <span class="label">Route</span>
         <span class="uri-path" data-bind="activeController.path"></span>→ 
         <span class="route-path" data-bind="activeController.currentRouteWithKey"></span>
       </li>
-      <li class="param-info">
+      <li class="prop param-info">
         <span class="label">Params</span> 
-        <div data-view="PropertiesView" data-view-properties="activeController.properties"></div>
+        <div data-view="PropertiesView" data-view-properties="activeController.properties" class="obj-properties-list"></div>
       </li>
     </ul>
   </div>

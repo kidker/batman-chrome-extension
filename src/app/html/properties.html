@@ -1,7 +1,7 @@
-<ul>
-  <li data-foreach-key="propertyKeys">
-    <span data-bind="key"></span>:&nbsp;
-    <span data-showif="isObject[key]" data-event-click="expandObject | withArguments key">[Object]</span>
-    <span data-hideif="isObject[key]" data-bind="properties[key]"></span>
+<ul class="obj-list">
+  <li data-foreach-key="propertyKeys" class="obj">
+    <span class="obj-key" data-bind="key"></span>:&nbsp;
+    <span class="obj-preview" data-showif="isObject[key]" data-event-click="expandObject | withArguments key" data-bind="objectPreview"></span>
+    <span class="obj-value" data-hideif="isObject[key]" data-bind="properties[key]"></span>
   </li>
 </ul>

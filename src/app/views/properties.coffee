@@ -10,7 +10,11 @@ class Batbelt.PropertiesView extends Batman.View
     new Batman.Accessible (key) =>
       typeof @get("properties.#{key}") is 'object'
 
-  expandObject: (key, node, event) ->
+  @accessor 'objectPreview', ->
+    raw = JSON.stringify(@get('properties'))
+    if raw.length < 40 then raw else "#{raw.substring(0, 40)}…"
+
+  expandObject: (key, node, event) =>
     return if event.target != node
 
     if node.childNodes.length > 1
