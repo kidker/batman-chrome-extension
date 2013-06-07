@@ -4,8 +4,8 @@ Batbelt.AppObservable = {
     this.appObserve = function(property, cb) {
       var msg;
       msg = {
-        type: 'observeProperty',
-        id: this.get('id'),
+        type: 'observeLoadedProperty',
+        id: this.get(this.constructor.primaryKey),
         property: property
       };
       return Batbelt.sendMessage(msg, cb);

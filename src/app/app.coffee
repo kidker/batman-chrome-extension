@@ -12,6 +12,7 @@ class window.Batbelt extends Batman.App
   @resources 'app_controllers'
   @resources 'app_models'
   @resources 'app_views'
+  @resources 'app_events'
 
   @sendMessage: do =>
     messageId = 0

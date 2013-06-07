@@ -2,8 +2,8 @@ Batbelt.AppObservable =
   initialize: ->
     @appObserve = (property, cb) ->
       msg =
-        type: 'observeProperty'
-        id: @get('id')
+        type: 'observeLoadedProperty'
+        id: @get(@constructor.primaryKey)
         property: property
 
       Batbelt.sendMessage(msg, cb)

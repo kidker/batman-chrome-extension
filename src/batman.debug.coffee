@@ -1,5 +1,6 @@
 class window.BatmanDebug
   @objectMap = new Batman.Hash
+  @observerMap = new Batman.Hash
 
   init: ->
     @messageListener()
@@ -17,8 +18,12 @@ class window.BatmanDebug
         cb type: 'pong'
       when 'storageAdapter'
         @storageAdapter(msg.key, msg.options, cb)
-      when 'observeProperty'
-        @observeProperty(msg.id, msg.property, cb)
+      when 'observeLoadedProperty'
+        @observeLoadedProperty(msg.id, msg.property, cb)
+      when 'startObservingEvents'
+        @startObservingEvents(msg.keypath, cb)
+      when 'stopObservingEvents'
+        @stopObservingEvents(msg.keypath, cb)
       else
         console.log 'Unknown message', msg
 
@@ -29,9 +34,31 @@ class window.BatmanDebug
     BatmanDebug[modelName][action] options, (res) ->
       cb(res, {close: true})
 
-  observeProperty: (id, property, cb) ->
+  observeLoadedProperty: (id, property, cb) ->
     BatmanDebug.objectMap.get(id)?.observe property, (newValue) ->
       cb(newValue, {close: false})
+
+  startObservingEvents: (keypath, cb) ->
+    property = Batman.currentApp.get(keypath)
+    @stopObservingEvents(keypath)
+
+    return unless property
+    BatmanDebug.observerMap.set(keypath, property)
+
+    property.debug_fire = property.fire
+    property.fire = (key, args...) ->
+      eventForKey = @event(key, false)
+      if eventForKey
+        cb key: key, prevented: eventForKey.isPrevented(), listeners: eventForKey.handlers?.length
+      else
+        cb key: key, prevented: null, listeners: 0
+      @debug_fire.apply(this, arguments)
+
+  stopObservingEvents: (keypath, cb) ->
+    if oldProperty = BatmanDebug.observerMap.get(keypath)
+      if oldProperty.debug_fire
+        oldProperty.fire = oldProperty.debug_fire
+        delete oldProperty.debug_fire
 
 class BatmanDebug.AppController
   constructor: (@name) ->
@@ -97,5 +124,5 @@ class BatmanDebug.AppView
 
 if window.Batman?.currentApp
   app = window.Batman.currentApp
-  app.debug = new BatmanDebug()
+  app.debug = new BatmanDebug(app)
   app.debug.init()

@@ -30,6 +30,8 @@ window.Batbelt = (function(_super) {
 
   Batbelt.resources('app_views');
 
+  Batbelt.resources('app_events');
+
   Batbelt.sendMessage = (function() {
     var callbackFunctions, messageId, port;
     messageId = 0;

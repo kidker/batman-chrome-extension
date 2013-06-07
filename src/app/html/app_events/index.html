@@ -1,0 +1,13 @@
+<h3>Events</h3>
+<input type="text" data-bind="dirtyKeypath"></input>
+<button data-event-click="commitKeypath">Bind</button>
+<span data-bind="keypath.key"></span>
+<ul>
+  <li data-foreach-event="keypath.events">
+    <span class="title-desc">Key</span>
+    <span data-bind="event.key"></span>
+    <span class="title-desc">Listeners</span>
+    <span data-bind="event.listeners"></span>
+    <span class="title-desc" data-showif="event.prevented">Prevented</span>
+  </li>
+</ul>
