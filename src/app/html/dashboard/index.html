@@ -1,1 +1,6 @@
-<h3>Dashboard... coming soon</h3>
+<ul>
+  <li data-foreach-stat="statKeys">
+    <span data-bind="stat"></span>:&nbsp;
+    <span data-bind="stats[stat]"></span>
+  </li>
+</ul>

@@ -3,6 +3,7 @@ class window.BatmanDebug
   @observerMap = new Batman.Hash
 
   init: ->
+    @setUpCounters()
     @messageListener()
 
   messageListener: ->
@@ -11,6 +12,13 @@ class window.BatmanDebug
         @handleMessage event.data.data, (res, options = {}) =>
           data = JSON.stringify(BatmanDebug.prettify(res))
           window.postMessage {id: event.data.id, for: 'batbelt', data, options}, '*'
+
+  setUpCounters: ->
+    @counters = bindings: 0, events: 0, observers: 0
+
+    Batman.DOM.AbstractBinding::constructor = @wrapWithCounter('bindings', Batman.DOM.AbstractBinding::constructor)
+    Batman.Event::fireWithContext = @wrapWithCounter('events', Batman.Event::fireWithContext)
+    Batman.Property::observe = @wrapWithCounter('observers', Batman.Property::observe)
 
   handleMessage: (msg, cb) ->
     switch msg.type
@@ -24,6 +32,8 @@ class window.BatmanDebug
         @startObservingEvents(msg.keypath, cb)
       when 'stopObservingEvents'
         @stopObservingEvents(msg.keypath, cb)
+      when 'stats'
+        @fetchCounters(cb)
       else
         console.log 'Unknown message', msg
 
@@ -59,6 +69,14 @@ class window.BatmanDebug
       if oldProperty.debug_fire
         oldProperty.fire = oldProperty.debug_fire
         delete oldProperty.debug_fire
+
+  fetchCounters: (cb) -> cb(@counters, {close: true})
+
+  wrapWithCounter: (name, fn) ->
+    self = this
+    return ->
+      self.counters[name]++
+      fn.apply(this, arguments)
 
 class BatmanDebug.AppController
   constructor: (@name) ->
@@ -120,7 +138,6 @@ class BatmanDebug.AppView
       views.push({name}) if attr.prototype instanceof Batman.Model
 
     cb(views)
-
 
 if window.Batman?.currentApp
   app = window.Batman.currentApp

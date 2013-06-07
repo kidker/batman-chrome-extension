@@ -11,6 +11,7 @@ window.BatmanDebug = (function() {
   BatmanDebug.observerMap = new Batman.Hash;
 
   BatmanDebug.prototype.init = function() {
+    this.setUpCounters();
     return this.messageListener();
   };
 
@@ -35,6 +36,17 @@ window.BatmanDebug = (function() {
     });
   };
 
+  BatmanDebug.prototype.setUpCounters = function() {
+    this.counters = {
+      bindings: 0,
+      events: 0,
+      observers: 0
+    };
+    Batman.DOM.AbstractBinding.prototype.constructor = this.wrapWithCounter('bindings', Batman.DOM.AbstractBinding.prototype.constructor);
+    Batman.Event.prototype.fireWithContext = this.wrapWithCounter('events', Batman.Event.prototype.fireWithContext);
+    return Batman.Property.prototype.observe = this.wrapWithCounter('observers', Batman.Property.prototype.observe);
+  };
+
   BatmanDebug.prototype.handleMessage = function(msg, cb) {
     switch (msg.type) {
       case 'ping':
@@ -49,6 +61,8 @@ window.BatmanDebug = (function() {
         return this.startObservingEvents(msg.keypath, cb);
       case 'stopObservingEvents':
         return this.stopObservingEvents(msg.keypath, cb);
+      case 'stats':
+        return this.fetchCounters(cb);
       default:
         return console.log('Unknown message', msg);
     }
@@ -112,6 +126,21 @@ window.BatmanDebug = (function() {
         return delete oldProperty.debug_fire;
       }
     }
+  };
+
+  BatmanDebug.prototype.fetchCounters = function(cb) {
+    return cb(this.counters, {
+      close: true
+    });
+  };
+
+  BatmanDebug.prototype.wrapWithCounter = function(name, fn) {
+    var self;
+    self = this;
+    return function() {
+      self.counters[name]++;
+      return fn.apply(this, arguments);
+    };
   };
 
   return BatmanDebug;
