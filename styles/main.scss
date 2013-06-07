@@ -14,10 +14,6 @@ body {
 
 h3 { margin: 0; padding: 0; }
 
-li.no-list-style {
-    list-style: none;
-}
-
 #main-nav {
     z-index: 10;
     position: relative;
@@ -62,14 +58,18 @@ li.no-list-style {
     display: flex;
 }
 
-#controller-list {
-    -webkit-flex: 1;
-    list-style: none;
+#controller-list-container {
+    -webkit-flex: 0 300px;
     margin: 0;
-    margin-top: 43px;
-    padding: 0;
-    width: 100%;
     font-family: 'Menlo', monospace;
+    top: 0;
+    bottom: 0;
+
+    #controller-list {
+        padding: 0;
+        list-style: none;
+        width: 100%;
+    }
 
     .controller-item {
         font-size: 13px;
@@ -81,6 +81,7 @@ li.no-list-style {
 
         &.active { background: #fff; border-top-color: #DDDAF0; }
         &:hover { background: #444453; color: #fff; cursor: pointer; }
+        .current { font-size: 18px; line-height: 0px; }
     }
 }
 
@@ -124,7 +125,7 @@ li.no-list-style {
 }
 
 .current-controller {
-    -webkit-flex: 0 1 600px;
+    -webkit-flex: 1;
     box-sizing: border-box;
     background: #fff;
     padding: 10px;

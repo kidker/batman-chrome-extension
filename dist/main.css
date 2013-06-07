@@ -52,27 +52,32 @@ h3 {
   display: -webkit-flex;
   display: flex; }
 
-#controller-list {
-  -webkit-flex: 1;
-  list-style: none;
+#controller-list-container {
+  -webkit-flex: 0 300px;
   margin: 0;
-  margin-top: 43px;
-  padding: 0;
-  width: 100%;
-  font-family: 'Menlo', monospace; }
-  #controller-list .controller-item {
+  font-family: 'Menlo', monospace;
+  top: 0;
+  bottom: 0; }
+  #controller-list-container #controller-list {
+    padding: 0;
+    list-style: none;
+    width: 100%; }
+  #controller-list-container .controller-item {
     font-size: 13px;
     padding: 10px;
     border-top: 1px solid transparent;
     -webkit-user-select: none;
     user-select: none; }
-    #controller-list .controller-item.active {
+    #controller-list-container .controller-item.active {
       background: #fff;
       border-top-color: #DDDAF0; }
-    #controller-list .controller-item:hover {
+    #controller-list-container .controller-item:hover {
       background: #444453;
       color: #fff;
       cursor: pointer; }
+    #controller-list-container .controller-item .current {
+      font-size: 18px;
+      line-height: 0px; }
 
 .label {
   background: #ffec00;
@@ -109,7 +114,7 @@ h3 {
   font-weight: 700; }
 
 .current-controller {
-  -webkit-flex: 0 1 600px;
+  -webkit-flex: 1;
   box-sizing: border-box;
   background: #fff;
   padding: 10px;

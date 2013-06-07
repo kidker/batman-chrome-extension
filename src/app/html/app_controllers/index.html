@@ -16,7 +16,12 @@
     </ul>
   </div>
 
-  <ul id="controller-list">
-    <li data-foreach-controller="controllers" data-addclass-active="activeController | equals controller" class="controller-item" data-event-click="setActive | withArguments controller" data-bind="controller.name"></li>
-  </ul>
+  <div id="controller-list-container">
+    <ul id="controller-list">
+      <li data-foreach-controller="controllers" data-addclass-active="activeController | equals controller" data-event-click="setActive | withArguments controller" class="controller-item">
+        <span data-bind="controller.name"></span>
+        <span data-showif="controller.current" class="current">★</span>
+      </li>
+    </ul>
+  </div>
 </div>
