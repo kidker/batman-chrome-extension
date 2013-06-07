@@ -67,8 +67,8 @@ class BatmanDebug.AppController
     @instance = Batman.currentApp.get("controllers.#{instanceName}")
     BatmanDebug.objectMap.set(@instance._batmanID(), @instance)
 
-  isCurrentController: ->
-    Batman.currentApp.get('currentRoute.controller') is @instanceName
+    @instance.accessor '_isCurrentController', =>
+      Batman.currentApp.get('currentRoute.controller') is @instanceName
 
   toJSON: ->
     obj = BatmanDebug.prettify(@instance)
@@ -76,7 +76,7 @@ class BatmanDebug.AppController
     obj.name = @name
     obj.action = @instance.get('action')
     obj.path = @instance.get('params.path')
-    obj.current = @isCurrentController()
+    obj._isCurrentController = @instance.get('_isCurrentController')
     obj
 
   @readAll: (options, cb) ->

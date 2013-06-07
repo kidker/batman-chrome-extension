@@ -1,10 +1,10 @@
 <div id="controller-container">
-  <div class="current-controller">
+  <div class="current-active" id="current-controller">
     <span class="title-desc">Active Controller</span>
     <h2 class="title-large" data-bind="activeController.name"></h2>
 
-    <ul class="controller-properties">
-      <li class="prop route-info" data-showif="activeController.current">
+    <ul class="properties">
+      <li class="prop route-info" data-showif="activeController._isCurrentController">
         <span class="label">Route</span>
         <span class="uri-path" data-bind="activeController.path"></span>→ 
         <span class="route-path" data-bind="activeController.currentRouteWithKey"></span>
@@ -16,11 +16,11 @@
     </ul>
   </div>
 
-  <div id="controller-list-container">
-    <ul id="controller-list">
-      <li data-foreach-controller="controllers" data-addclass-active="activeController | equals controller" data-event-click="setActive | withArguments controller" class="controller-item">
+  <div class="list-container">
+    <ul class="nav-list">
+      <li data-foreach-controller="controllers" data-addclass-active="activeController | equals controller" data-event-click="setActive | withArguments controller" class="list-item">
         <span data-bind="controller.name"></span>
-        <span data-showif="controller.current" class="current">★</span>
+        <span data-showif="controller._isCurrentController" class="current">★</span>
       </li>
     </ul>
   </div>

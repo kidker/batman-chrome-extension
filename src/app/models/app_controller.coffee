@@ -5,7 +5,7 @@ class Batbelt.AppController extends Batman.Model
 
   @mixin Batbelt.AppObservable
 
-  @encode 'name', 'action', 'path', 'current'
+  @encode 'name', 'action', 'path', '_isCurrentController'
 
   @encode 'properties',
     decode: (obj) -> new Batman.Hash(obj)
@@ -24,5 +24,5 @@ class Batbelt.AppController extends Batman.Model
 
   initObservers: ->
     @observeProperties()
-    for param in ['name', 'action', 'path', 'current']
+    for param in ['name', 'action', 'path', '_isCurrentController']
       do (param) => @appObserve param, (value) => @set(param, value)

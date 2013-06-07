@@ -1,11 +1,29 @@
-<ul id="model-list">
-  <li data-foreach-model="models">
-    <span data-bind="model.name"></span>
-    <ul>
-      <li data-foreach-instance="model.instances">
-        <span data-bind="instance.id"></span>
-        <div data-view="PropertiesView" data-view-properties="instance.properties"></div>
+<div id="model-container">
+
+  <div class="current-active" id="current-model">
+    <span class="title-desc">Active Model</span>
+    <h2 class="title-large" data-bind="activeModel.name"></h2>
+
+    <ul class="properties">
+      <li class="prop param-info">
+        <span class="label">Params</span> 
+        <div data-view="PropertiesView" data-view-properties="activeModel.properties" class="obj-properties-list"></div>
       </li>
     </ul>
-  </li>
-</ul>
+  </div>
+
+  <div class="list-container">
+    <ul class="nav-list">
+      <li data-foreach-model="models" class="list-item" data-addclass-active="activeModel | equals model" data-event-click="setActive | withArguments model">
+        <span data-bind="model.name"></span>
+        <!-- <ul>
+          <li data-foreach-instance="model.instances">
+            <span data-bind="instance.id"></span>
+            <div data-view="PropertiesView" data-view-properties="instance.properties"></div>
+          </li>
+        </ul> -->
+      </li>
+    </ul>
+  </div>
+
+</div>

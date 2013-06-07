@@ -1,10 +1,6 @@
 class Batbelt.AppControllersController extends Batman.Controller
   routingKey: 'app_controllers'
 
-  @accessor 'currentController', ->
-    for controller in @get('controllers')
-      return controller if controller.get('current')
-
   index: ->
     Batbelt.AppController.load @errorHandler (controllers) =>
       @set('controllers', controllers)
@@ -18,4 +14,4 @@ class Batbelt.AppControllersController extends Batman.Controller
 
   _getCurrentController: (controllers) ->
     for controller in controllers
-      return controller if controller.get('current')
+      return controller if controller.get('_isCurrentController')

@@ -120,17 +120,17 @@ window.BatmanDebug = (function() {
 
 BatmanDebug.AppController = (function() {
   function AppController(name) {
-    var instanceName;
+    var instanceName,
+      _this = this;
     this.name = name;
     instanceName = this.name.substr(0, this.name.length - 'Controller'.length);
     this.instanceName = Batman.helpers.underscore(instanceName);
     this.instance = Batman.currentApp.get("controllers." + instanceName);
     BatmanDebug.objectMap.set(this.instance._batmanID(), this.instance);
+    this.instance.accessor('_isCurrentController', function() {
+      return Batman.currentApp.get('currentRoute.controller') === _this.instanceName;
+    });
   }
-
-  AppController.prototype.isCurrentController = function() {
-    return Batman.currentApp.get('currentRoute.controller') === this.instanceName;
-  };
 
   AppController.prototype.toJSON = function() {
     var obj;
@@ -139,7 +139,7 @@ BatmanDebug.AppController = (function() {
     obj.name = this.name;
     obj.action = this.instance.get('action');
     obj.path = this.instance.get('params.path');
-    obj.current = this.isCurrentController();
+    obj._isCurrentController = this.instance.get('_isCurrentController');
     return obj;
   };
 

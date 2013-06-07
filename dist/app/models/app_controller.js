@@ -17,7 +17,7 @@ Batbelt.AppController = (function(_super) {
 
   AppController.mixin(Batbelt.AppObservable);
 
-  AppController.encode('name', 'action', 'path', 'current');
+  AppController.encode('name', 'action', 'path', '_isCurrentController');
 
   AppController.encode('properties', {
     decode: function(obj) {
@@ -49,7 +49,7 @@ Batbelt.AppController = (function(_super) {
     var param, _i, _len, _ref1, _results,
       _this = this;
     this.observeProperties();
-    _ref1 = ['name', 'action', 'path', 'current'];
+    _ref1 = ['name', 'action', 'path', '_isCurrentController'];
     _results = [];
     for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
       param = _ref1[_i];

@@ -15,17 +15,6 @@ Batbelt.AppControllersController = (function(_super) {
 
   AppControllersController.prototype.routingKey = 'app_controllers';
 
-  AppControllersController.accessor('currentController', function() {
-    var controller, _i, _len, _ref1;
-    _ref1 = this.get('controllers');
-    for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-      controller = _ref1[_i];
-      if (controller.get('current')) {
-        return controller;
-      }
-    }
-  });
-
   AppControllersController.prototype.index = function() {
     var _this = this;
     return Batbelt.AppController.load(this.errorHandler(function(controllers) {
@@ -49,7 +38,7 @@ Batbelt.AppControllersController = (function(_super) {
     var controller, _i, _len;
     for (_i = 0, _len = controllers.length; _i < _len; _i++) {
       controller = controllers[_i];
-      if (controller.get('current')) {
+      if (controller.get('_isCurrentController')) {
         return controller;
       }
     }

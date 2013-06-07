@@ -1,6 +1,10 @@
-<h3>Views</h3>
-<ul id="view-list">
-  <li data-foreach-view="views">
-    <span data-bind="view.name"></span>
-  </li>
-</ul>
+<div class="view-container">
+  <div class="list-container">
+    <ul class="nav-list">
+      <li data-foreach-view="views" class="list-item">
+        <span data-bind="view.name"></span>
+        <span data-showif="view.current" class="current">★</span>
+      </li>
+    </ul>
+  </div>
+</div>
