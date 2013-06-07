@@ -6,8 +6,12 @@
 
     <ul class="properties">
       <li class="prop param-info">
-        <span class="label">Params</span> 
-        <div data-view="PropertiesView" data-view-properties="activeModel.properties" class="obj-properties-list"></div>
+        <ul id="model-instances">
+          <li class="instance" data-foreach-instance="activeModel.instances">
+            <span class="instance-title" data>Instance #<span data-bind="instance.id"></span></span>
+            <div data-view="PropertiesView" data-view-properties="instance.properties"></div>
+          </li>
+        </ul>
       </li>
     </ul>
   </div>

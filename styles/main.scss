@@ -134,10 +134,9 @@ h3 { margin: 0; padding: 0; }
     -webkit-flex: 1;
     box-sizing: border-box;
     background: #fff;
-    padding: 10px;
-    padding-left: 30px;
+    padding: 10px 0 10px 30px;
     margin-top: 44px;
-    overflow:scroll;
+    overflow: scroll;
 
     &#current-controller {
         #title-desc { text-transform: uppercase; }
@@ -159,6 +158,26 @@ h3 { margin: 0; padding: 0; }
     overflow: auto;
     position: absolute;
     top: 0;
+}
+
+#model-instances {
+    list-style: none;
+    padding-left: 0;
+
+    .instance{
+        padding: 0 15px 10px;
+        &:nth-child(odd) {
+            background-color: #f6f6f6;
+        }
+    }
+
+    .instance-title {
+        text-transform: uppercase;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 10px 0;
+        display: block;
+    }
 }
 
 

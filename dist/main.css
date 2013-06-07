@@ -126,8 +126,7 @@ h3 {
   -webkit-flex: 1;
   box-sizing: border-box;
   background: #fff;
-  padding: 10px;
-  padding-left: 30px;
+  padding: 10px 0 10px 30px;
   margin-top: 44px;
   overflow: scroll; }
   .current-active#current-controller #title-desc {
@@ -150,6 +149,20 @@ h3 {
   overflow: auto;
   position: absolute;
   top: 0; }
+
+#model-instances {
+  list-style: none;
+  padding-left: 0; }
+  #model-instances .instance {
+    padding: 0 15px 10px; }
+    #model-instances .instance:nth-child(odd) {
+      background-color: #f6f6f6; }
+  #model-instances .instance-title {
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 10px 0;
+    display: block; }
 
 /* Object Styling*/
 .obj-properties-list {
