@@ -16,8 +16,56 @@ Batbelt.PropertiesView = (function(_super) {
   PropertiesView.prototype.source = 'properties';
 
   PropertiesView.accessor('propertyKeys', function() {
-    return this.get('properties').keys();
+    var _ref1;
+    return (_ref1 = this.get('properties')) != null ? _ref1.keys() : void 0;
   });
+
+  PropertiesView.accessor('isObject', function() {
+    var _this = this;
+    return new Batman.Accessible(function(key) {
+      return typeof _this.get("properties." + key) === 'object';
+    });
+  });
+
+  PropertiesView.prototype.expandObject = function(key, node, event) {
+    var context, div;
+    if (event.target !== node) {
+      return;
+    }
+    if (node.childNodes.length > 1) {
+      return node.innerHTML = '[Object]';
+    }
+    div = document.createElement('div');
+    div.setAttribute('data-view-properties', 'value');
+    node.appendChild(div);
+    context = Batman({
+      value: new Batman.Hash(this._buildHash(this.get("properties." + key)))
+    });
+    return new Batbelt.PropertiesView({
+      node: div,
+      context: context,
+      parentView: this
+    });
+  };
+
+  PropertiesView.prototype._buildHash = function(value) {
+    var hash, id;
+    switch (Object.prototype.toString.call(value)) {
+      case '[object Function]':
+        return {
+          0: '<Function>'
+        };
+      case '[object Array]':
+        id = 0;
+        hash = {};
+        value.forEach(function(item) {
+          return hash[id++] = item;
+        });
+        return hash;
+      case '[object Object]':
+        return value;
+    }
+  };
 
   return PropertiesView;
 
