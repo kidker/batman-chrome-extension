@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "Bat Belt",
-  "description": "Chrome developer utilities to help Batman.js development",
+  "name": "batman.js devtools",
+  "description": "Chrome developer utilities to help batman.js development",
   "version": "1.0",
 
   "permissions": [
