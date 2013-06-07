@@ -42,6 +42,7 @@ window.BatmanDebug = (function() {
       events: 0,
       observers: 0
     };
+    this.originalPropertyObserve = Batman.Property.prototype.observe;
     Batman.DOM.AbstractBinding.prototype.constructor = this.wrapWithCounter('bindings', Batman.DOM.AbstractBinding.prototype.constructor);
     Batman.Event.prototype.fireWithContext = this.wrapWithCounter('events', Batman.Event.prototype.fireWithContext);
     return Batman.Property.prototype.observe = this.wrapWithCounter('observers', Batman.Property.prototype.observe);
@@ -80,12 +81,17 @@ window.BatmanDebug = (function() {
   };
 
   BatmanDebug.prototype.observeLoadedProperty = function(id, property, cb) {
-    var _ref;
-    return (_ref = BatmanDebug.objectMap.get(id)) != null ? _ref.observe(property, function(newValue) {
-      return cb(newValue, {
-        close: false
+    var wrappedObserve, _ref;
+    wrappedObserve = Batman.Property.prototype.observe;
+    Batman.Property.prototype.observe = this.originalPropertyObserve;
+    if ((_ref = BatmanDebug.objectMap.get(id)) != null) {
+      _ref.observe(property, function(newValue) {
+        return cb(newValue, {
+          close: false
+        });
       });
-    }) : void 0;
+    }
+    return Batman.Property.prototype.observe = wrappedObserve;
   };
 
   BatmanDebug.prototype.wrapFire = function(emitter, cb) {

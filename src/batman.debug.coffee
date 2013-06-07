@@ -16,6 +16,8 @@ class window.BatmanDebug
   setUpCounters: ->
     @counters = bindings: 0, events: 0, observers: 0
 
+    @originalPropertyObserve = Batman.Property::observe
+
     Batman.DOM.AbstractBinding::constructor = @wrapWithCounter('bindings', Batman.DOM.AbstractBinding::constructor)
     Batman.Event::fireWithContext = @wrapWithCounter('events', Batman.Event::fireWithContext)
     Batman.Property::observe = @wrapWithCounter('observers', Batman.Property::observe)
@@ -45,8 +47,13 @@ class window.BatmanDebug
       cb(res, {close: true})
 
   observeLoadedProperty: (id, property, cb) ->
+    wrappedObserve = Batman.Property::observe
+    Batman.Property::observe = @originalPropertyObserve
+
     BatmanDebug.objectMap.get(id)?.observe property, (newValue) ->
       cb(newValue, {close: false})
+
+    Batman.Property::observe = wrappedObserve
 
   wrapFire: (emitter, cb) ->
     if not emitter.debug_fire

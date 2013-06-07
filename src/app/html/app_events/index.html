@@ -15,14 +15,17 @@
     </li>
   </ul>
   <div class="event-list">
-    <ul>
-      <li data-foreach-event="keypath.events">
-        <span class="title-desc">Key</span>
-        <span data-bind="event.key"></span>
-        <span class="title-desc">Listeners</span>
-        <span data-bind="event.listeners"></span>
-        <span class="title-desc" data-showif="event.prevented">Prevented</span>
-      </li>
+    <table>
+      <tr>
+        <th>Key</th>
+        <th>Listeners</th>
+        <th>Prevented</th>
+      </tr>
+      <tr data-foreach-event="keypath.events">
+        <td><span data-bind="event.key"></span></td>
+        <td><span data-bind="event.listeners"></span></td>
+        <td><span class="title-desc" data-showif="event.prevented">Prevented</span></td>
+      </tr>
     </ul>
   </div>
 </div>
