@@ -1,6 +1,6 @@
-<ul>
-  <li data-foreach-stat="statKeys">
-    <span data-bind="stat"></span>:&nbsp;
-    <span data-bind="stats[stat]"></span>
-  </li>
-</ul>
+<div id="dashboard">
+  <div class="stat" data-foreach-stat="statKeys">
+    <div class="title" data-bind="stat | capitalize"></div>
+    <div class="large-value" data-bind="stats[stat]"></div>
+  </div>
+</div>

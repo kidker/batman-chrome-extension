@@ -180,7 +180,21 @@ h3 { margin: 0; padding: 0; }
     }
 }
 
+#dashboard {
+    .stat {
+        float: left;
+        padding: 30px;
+        height: 80px;
+        width: 80px;
+        text-align: center;
 
+        .large-value {
+            font-size: 30px;
+            font-weight: 500;
+            margin: 10px;
+        }
+    }
+}
 
 
 /* Object Styling*/

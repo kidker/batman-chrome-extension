@@ -164,6 +164,17 @@ h3 {
     padding: 10px 0;
     display: block; }
 
+#dashboard .stat {
+  float: left;
+  padding: 30px;
+  height: 80px;
+  width: 80px;
+  text-align: center; }
+  #dashboard .stat .large-value {
+    font-size: 30px;
+    font-weight: 500;
+    margin: 10px; }
+
 /* Object Styling*/
 .obj-properties-list {
   float: left; }
