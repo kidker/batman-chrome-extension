@@ -101,6 +101,20 @@ h3 {
       font-size: 18px;
       line-height: 0px; }
 
+#event-container {
+  -webkit-flex: 0 300px;
+  padding: 20px; }
+  #event-container .controls, #event-container .info {
+    width: 100%; }
+  #event-container #keypathSelector {
+    width: 85%;
+    float: left; }
+  #event-container #keypathCommit {
+    width: 10%;
+    float: right; }
+  #event-container .errors {
+    color: #cc3230; }
+
 .label {
   background: #ffec00;
   color: #776e0a;

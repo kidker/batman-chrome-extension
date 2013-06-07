@@ -12,8 +12,15 @@ class Batbelt.AppKeypath extends Batman.Model
   constructor: ->
     super
     @set('events', new Batman.Set)
+    @set('appErrors', new Batman.Set)
+
     @observe 'key', (key, oldKey) =>
+      @get('events').clear()
+      @get('appErrors').clear()
       @appStopObservingEvents oldKey if oldKey
 
       @appStartObservingEvents key, (eventForKey) =>
-        @get('events').add(eventForKey)
+        if eventForKey.error
+          @get('appErrors').add(eventForKey)
+        else
+          @get('events').add(eventForKey)

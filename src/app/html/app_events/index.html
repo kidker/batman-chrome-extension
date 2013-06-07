@@ -1,13 +1,28 @@
-<h3>Events</h3>
-<input type="text" data-bind="dirtyKeypath"></input>
-<button data-event-click="commitKeypath">Bind</button>
-<span data-bind="keypath.key"></span>
-<ul>
-  <li data-foreach-event="keypath.events">
-    <span class="title-desc">Key</span>
-    <span data-bind="event.key"></span>
-    <span class="title-desc">Listeners</span>
-    <span data-bind="event.listeners"></span>
-    <span class="title-desc" data-showif="event.prevented">Prevented</span>
-  </li>
-</ul>
+<div id="event-container">
+  <h3>Events</h3>
+  <div class="controls clearfix">
+    <input type="text" id="keypathSelector" data-bind="dirtyKeypath"></input>
+    <!--<input type="text" data-bind="typeFilter"></input>-->
+    <button id="keypathCommit" data-event-click="commitKeypath">Bind</button>
+  </div>
+  <div class="info" data-showif="keypath.key.length">
+    <span class="title-desc" data-bind="keypath.key"></span>
+    <span class="title-desc">Count: <span data-bind="keypath.events.length"></span></span>
+  </div>
+  <ul class="errors">
+    <li data-foreach-event="keypath.appErrors">
+      <span data-bind="event.error"></span>
+    </li>
+  </ul>
+  <div class="event-list">
+    <ul>
+      <li data-foreach-event="keypath.events">
+        <span class="title-desc">Key</span>
+        <span data-bind="event.key"></span>
+        <span class="title-desc">Listeners</span>
+        <span data-bind="event.listeners"></span>
+        <span class="title-desc" data-showif="event.prevented">Prevented</span>
+      </li>
+    </ul>
+  </div>
+</div>

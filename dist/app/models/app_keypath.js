@@ -19,12 +19,19 @@ Batbelt.AppKeypath = (function(_super) {
     var _this = this;
     AppKeypath.__super__.constructor.apply(this, arguments);
     this.set('events', new Batman.Set);
+    this.set('appErrors', new Batman.Set);
     this.observe('key', function(key, oldKey) {
+      _this.get('events').clear();
+      _this.get('appErrors').clear();
       if (oldKey) {
         _this.appStopObservingEvents(oldKey);
       }
       return _this.appStartObservingEvents(key, function(eventForKey) {
-        return _this.get('events').add(eventForKey);
+        if (eventForKey.error) {
+          return _this.get('appErrors').add(eventForKey);
+        } else {
+          return _this.get('events').add(eventForKey);
+        }
       });
     });
   }

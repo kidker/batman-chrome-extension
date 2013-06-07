@@ -48,27 +48,47 @@ class window.BatmanDebug
     BatmanDebug.objectMap.get(id)?.observe property, (newValue) ->
       cb(newValue, {close: false})
 
-  startObservingEvents: (keypath, cb) ->
-    property = Batman.currentApp.get(keypath)
-    @stopObservingEvents(keypath)
+  wrapFire: (emitter, cb) ->
+    if not emitter.debug_fire
+      emitter.debug_fire = emitter.fire
 
-    return unless property
-    BatmanDebug.observerMap.set(keypath, property)
-
-    property.debug_fire = property.fire
-    property.fire = (key, args...) ->
+    emitter.fire = (key, args...) ->
       eventForKey = @event(key, false)
       if eventForKey
         cb key: key, prevented: eventForKey.isPrevented(), listeners: eventForKey.handlers?.length
       else
         cb key: key, prevented: null, listeners: 0
+
       @debug_fire.apply(this, arguments)
 
+  unWrapFire: (emitter) ->
+    if emitter and emitter.debug_fire
+      emitter.fire = emitter.debug_fire
+      delete emitter.debug_fire
+
+  startObservingEvents: (keypath, cb) ->
+    @stopObservingEvents(keypath)
+
+    property = Batman.currentApp.property(keypath)
+    unless property
+      cb keypath: keypath, error: 'Keypath does not exist'
+      return
+
+    BatmanDebug.observerMap.set(keypath, property)
+    @wrapFire(property, cb)
+
+    value = property.getValue()
+    unless value
+      cb keypath: keypath, error: 'Keypath not set'
+      return
+
+    @wrapFire(value, cb)
+
   stopObservingEvents: (keypath, cb) ->
-    if oldProperty = BatmanDebug.observerMap.get(keypath)
-      if oldProperty.debug_fire
-        oldProperty.fire = oldProperty.debug_fire
-        delete oldProperty.debug_fire
+    oldProperty = BatmanDebug.observerMap.get(keypath)
+    if oldProperty
+      @unWrapFire(oldProperty)
+      @unWrapFire(oldProperty.getValue())
 
   fetchCounters: (cb) -> cb(@counters, {close: true})
 
@@ -139,7 +159,6 @@ class BatmanDebug.AppView
 
     cb(views)
 
-if window.Batman?.currentApp
-  app = window.Batman.currentApp
-  app.debug = new BatmanDebug(app)
+if (app = window.Batman?.currentApp) and not app.debug?
+  app.debug = new BatmanDebug()
   app.debug.init()

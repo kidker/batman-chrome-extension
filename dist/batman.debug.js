@@ -88,16 +88,11 @@ window.BatmanDebug = (function() {
     }) : void 0;
   };
 
-  BatmanDebug.prototype.startObservingEvents = function(keypath, cb) {
-    var property;
-    property = Batman.currentApp.get(keypath);
-    this.stopObservingEvents(keypath);
-    if (!property) {
-      return;
+  BatmanDebug.prototype.wrapFire = function(emitter, cb) {
+    if (!emitter.debug_fire) {
+      emitter.debug_fire = emitter.fire;
     }
-    BatmanDebug.observerMap.set(keypath, property);
-    property.debug_fire = property.fire;
-    return property.fire = function() {
+    return emitter.fire = function() {
       var args, eventForKey, key, _ref;
       key = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
       eventForKey = this.event(key, false);
@@ -118,13 +113,43 @@ window.BatmanDebug = (function() {
     };
   };
 
+  BatmanDebug.prototype.unWrapFire = function(emitter) {
+    if (emitter && emitter.debug_fire) {
+      emitter.fire = emitter.debug_fire;
+      return delete emitter.debug_fire;
+    }
+  };
+
+  BatmanDebug.prototype.startObservingEvents = function(keypath, cb) {
+    var property, value;
+    this.stopObservingEvents(keypath);
+    property = Batman.currentApp.property(keypath);
+    if (!property) {
+      cb({
+        keypath: keypath,
+        error: 'Keypath does not exist'
+      });
+      return;
+    }
+    BatmanDebug.observerMap.set(keypath, property);
+    this.wrapFire(property, cb);
+    value = property.getValue();
+    if (!value) {
+      cb({
+        keypath: keypath,
+        error: 'Keypath not set'
+      });
+      return;
+    }
+    return this.wrapFire(value, cb);
+  };
+
   BatmanDebug.prototype.stopObservingEvents = function(keypath, cb) {
     var oldProperty;
-    if (oldProperty = BatmanDebug.observerMap.get(keypath)) {
-      if (oldProperty.debug_fire) {
-        oldProperty.fire = oldProperty.debug_fire;
-        return delete oldProperty.debug_fire;
-      }
+    oldProperty = BatmanDebug.observerMap.get(keypath);
+    if (oldProperty) {
+      this.unWrapFire(oldProperty);
+      return this.unWrapFire(oldProperty.getValue());
     }
   };
 
@@ -260,8 +285,7 @@ BatmanDebug.AppView = (function() {
 
 })();
 
-if ((_ref = window.Batman) != null ? _ref.currentApp : void 0) {
-  app = window.Batman.currentApp;
-  app.debug = new BatmanDebug(app);
+if ((app = (_ref = window.Batman) != null ? _ref.currentApp : void 0) && (app.debug == null)) {
+  app.debug = new BatmanDebug();
   app.debug.init();
 }
