@@ -112,10 +112,32 @@ h3 { margin: 0; padding: 0; }
 
     .controls, .info {
         width: 100%;
+        display: block;
     }
 
-    #keypathSelector { width: 85%; float: left; }
-    #keypathCommit { width: 10%; float: right; }
+    #keypath-selector { 
+        width: 500px; 
+        float: left; 
+        border: 1px solid #ccc;
+        padding: 5px 7px;
+    }
+
+    #keypath-commit { 
+        width: 150px; 
+        width: 10%; 
+        float: left; 
+        background: #f1f1f1;
+        border-radius: 3px;
+        box-shadow: 1px 0px 3px rgba(220, 220, 220, 0.6);
+        border: 1px solid #ccc;
+        padding: 5px 6px;
+        margin-left: 10px;
+    }
+
+    #keypath-commit:hover {
+        background: #fff;
+        box-shadow: 1px 0px 3px rgba(220, 220, 220, 1);
+    }
 
     .errors { color: #cc3230; }
 }
@@ -208,6 +230,26 @@ h3 { margin: 0; padding: 0; }
             margin: 10px;
         }
     }
+}
+
+/* EVENT STYLING */
+.event-headers {
+    text-align: left;
+}
+
+.event-data:nth-child(even) {
+    background-color: #E1DFF3;
+}
+
+.event-key {
+    width: 200px;
+    font-size: 12px;
+    font-family: "Menlo", monospace;
+    padding: 5px;
+}
+
+.event-listener-count {
+    text-align: center;
 }
 
 
