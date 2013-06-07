@@ -3,7 +3,7 @@
 
   "name": "batman.js devtools",
   "description": "Chrome developer utilities to help batman.js development",
-  "version": "1.0",
+  "version": "1.1",
 
   "permissions": [
     "tabs",
